@@ -13,7 +13,8 @@ public class FiltroEspecifico implements FiltroXeral {
 
     private Long id;
     private String nome;
-
+    private String datos;
+    
     @Override
     public void aplicar(Busqueda b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -6,6 +6,8 @@
 package main.java.hotel;
 
 import main.java.transaccions.Reserva;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,14 +22,27 @@ public class Hotel {
     private String localizacion;
     private String descricion;
     private int Categoria;
-    private boolean enTempada;
+    private Calendar temporadaInicio;
+    private Calendar temporadaFin;
     private String servizos;
     private String telefono;
     private int numHabitacions;
 
     private List<Reserva> reservas;
 
-    public Hotel(Long id, String nome){
+    private Calendar getTemporadaInicio() {
+		return temporadaInicio;
+	}
+	private void setTemporadaInicio(Calendar temporadaInicio) {
+		this.temporadaInicio = temporadaInicio;
+	}
+	private Calendar getTemporadaFin() {
+		return temporadaFin;
+	}
+	private void setTemporadaFin(Calendar temporadaFin) {
+		this.temporadaFin = temporadaFin;
+	}
+	public Hotel(Long id, String nome){
     	this.id = id;
     	this.nome = nome;
     }
@@ -91,14 +106,6 @@ public class Hotel {
 
     public void setCategoria(int Categoria) {
         this.Categoria = Categoria;
-    }
-
-    public boolean isEnTempada() {
-        return enTempada;
-    }
-
-    public void setEnTempada(boolean enTempada) {
-        this.enTempada = enTempada;
     }
 
     public String getServizos() {
