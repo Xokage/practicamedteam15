@@ -5,10 +5,13 @@
  */
 package main.java.hotel;
 
+import javax.persistence.Entity;
+
 /**
  *
  * @author Urist
  */
+@Entity
 public class Habitacion {
 
     private Long id;
