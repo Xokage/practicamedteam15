@@ -1,4 +1,4 @@
-package buscarHotel;
+package test.java.buscarHotel;
 
 import static org.junit.Assert.*;
 
