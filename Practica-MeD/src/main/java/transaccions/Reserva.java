@@ -3,16 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.transaccions;
+package transaccions;
 
-import main.java.hotel.Habitacion;
+import hotel.Habitacion;
+
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Entity;
+
+import org.hibernate.annotations.Immutable;
 
 /**
  *
  * @author Urist
  */
+
+@Entity
+@Immutable
 public class Reserva {
 
     private Long id;

@@ -3,18 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.hotel;
+package hotel;
 
-import main.java.transaccions.Reserva;
+import transaccions.Reserva;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+
+import org.hibernate.annotations.BatchSize;
+
 /**
  *
  * @author Urist
  */
+@Entity
+@BatchSize(size=10)
 public class Hotel {
 
     private Long id;
