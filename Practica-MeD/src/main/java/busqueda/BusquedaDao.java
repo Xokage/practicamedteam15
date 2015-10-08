@@ -1,4 +1,4 @@
-package busqueda;
+package main.java.busqueda;
 
 import java.util.Calendar;
 

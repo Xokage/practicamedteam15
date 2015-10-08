@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package transaccions;
+package main.java.transaccions;
 
-import hotel.Habitacion;
+import main.java.hotel.Habitacion;
 
 import java.util.Date;
 import java.util.List;
