@@ -32,7 +32,21 @@ public class Reserva {
 
     private Long idHotel;
     private List<Habitacion> reservadas;
-
+    
+    public Reserva() {
+    	
+    }
+    
+    public Reserva(Date dataReserva, String nomeCliente, String DniCliente, 
+    		Date dataEntrada, Date dataSaida){
+    	
+    	this.dataReserva = dataReserva;
+    	this.nomeCliente = nomeCliente;
+    	this.DniCliente = DniCliente;
+    	this.dataEntrada = dataEntrada;
+    	this.dataSaida = dataSaida;
+    	
+    }
     public Long getIdHotel() {
         return idHotel;
     }
