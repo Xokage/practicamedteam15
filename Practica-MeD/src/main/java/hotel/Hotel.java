@@ -7,6 +7,7 @@ package main.java.hotel;
 
 import main.java.transaccions.Reserva;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Hotel {
     private String nome;
     private String localizacion;
     private String descricion;
-    private int Categoria;
+    private int categoria;
     private Calendar temporadaInicio;
     private Calendar temporadaFin;
     private String servizos;
@@ -35,6 +36,26 @@ public class Hotel {
     private int numHabitacions;
 
     private List<Reserva> reservas;
+    
+    public Hotel() {
+    	
+    }
+    
+    public Hotel(String nome, String localizacion, String descricion, int categoria, 
+    		Calendar temporadaInicio, Calendar temporadaFin, String servizos,
+    		int numHabitacions) {
+    		
+    	this.nome = nome;
+    	this.localizacion = localizacion;
+    	this.descricion = descricion;
+    	this.categoria = categoria;
+    	this.temporadaInicio = temporadaInicio;
+    	this.temporadaFin = temporadaFin;
+    	this.servizos = servizos;
+    	this.numHabitacions = numHabitacions;
+    	this.reservas = new ArrayList<>();
+    	
+    }
 
     private Calendar getTemporadaInicio() {
 		return temporadaInicio;
@@ -107,11 +128,11 @@ public class Hotel {
     }
 
     public int getCategoria() {
-        return Categoria;
+        return categoria;
     }
 
-    public void setCategoria(int Categoria) {
-        this.Categoria = Categoria;
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
     }
 
     public String getServizos() {
