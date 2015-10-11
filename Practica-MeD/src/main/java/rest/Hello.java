@@ -5,6 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+// CLASE EXEMPLO
 // Plain old Java Object it does not extend as class or implements 
 // an interface
 

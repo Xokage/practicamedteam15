@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 public class Busqueda {
 
     private Long id;
-    private List<FiltroXeral> filtros;
+    private List<Filtro> filtros;
     private String localizacion;
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataInicio;
@@ -79,11 +79,11 @@ public class Busqueda {
         this.id = id;
     }
 
-    public List<FiltroXeral> getFiltros() {
+    public List<Filtro> getFiltros() {
         return filtros;
     }
 
-    public void setFiltros(List<FiltroXeral> filtros) {
+    public void setFiltros(List<Filtro> filtros) {
         this.filtros = filtros;
     }
 

@@ -20,6 +20,11 @@ import org.hibernate.annotations.BatchSize;
  *
  * @author Urist
  */
+
+
+
+//TODO Quitar integer numeroDeHabitacions e poñer unha consulta a base de datos co dao.
+
 @Entity
 @BatchSize(size=10)
 public class Hotel {
