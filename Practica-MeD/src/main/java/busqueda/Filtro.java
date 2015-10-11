@@ -9,7 +9,7 @@ package main.java.busqueda;
  *
  * @author Urist
  */
-public interface FiltroXeral {
+public interface Filtro {
 
     public void aplicar(Busqueda b);
 

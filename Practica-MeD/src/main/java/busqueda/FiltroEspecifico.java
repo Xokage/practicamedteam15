@@ -9,7 +9,7 @@ package main.java.busqueda;
  *
  * @author Urist
  */
-public class FiltroEspecifico implements FiltroXeral {
+public class FiltroEspecifico implements Filtro {
 
     private Long id;
     private String nome;
