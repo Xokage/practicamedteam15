@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import main.java.hotel.Hotel;
+
 /**
  *
  * @author Urist
@@ -29,9 +31,19 @@ public class Busqueda {
     private Calendar dataFin;
     private int numPerPorHab;
     private int categoria;
+    private List<Hotel> hoteis; //engadin este atributo para facer o SELECT
+    
+    public Busqueda() {
+    	
+    }
+    
+    
+    public Busqueda(String localizacion, Calendar dataInicio, Calendar dataFin, int numPerPorHab) {
+    	
+    }
     
 
-    private String getLocalizacion() {
+	private String getLocalizacion() {
 		return localizacion;
 	}
 
@@ -86,5 +98,12 @@ public class Busqueda {
     public void setFiltros(List<Filtro> filtros) {
         this.filtros = filtros;
     }
+    
+    public List<Hotel> getHoteis() {
+		return hoteis;
+	}
 
+	public void setHoteis(List<Hotel> hoteis) {
+		this.hoteis = hoteis;
+	}
 }
