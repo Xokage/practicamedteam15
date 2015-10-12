@@ -11,4 +11,6 @@ public interface HotelDao {
 			String servizos, String telefono);
 	public void delHotel(Long id);
 	
+	//END TESTING
+	
 }
