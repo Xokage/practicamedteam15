@@ -20,7 +20,7 @@ public class Habitacion {
     private String servizos;
     private boolean estado;
 
-    private Long idHotel;
+    private Hotel idHotel; //Aqui teria que ser unha Entidade si seguimos o modelo PA
 
     public Long getId() {
         return id;
@@ -62,11 +62,11 @@ public class Habitacion {
         this.estado = estado;
     }
 
-    public Long getIdHotel() {
+    public Hotel getIdHotel() {
         return idHotel;
     }
 
-    public void setIdHotel(Long idHotel) {
+    public void setIdHotel(Hotel idHotel) {
         this.idHotel = idHotel;
     }
 

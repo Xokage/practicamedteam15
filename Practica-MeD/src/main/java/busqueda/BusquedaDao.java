@@ -10,7 +10,7 @@ public interface BusquedaDao {
 	
 	// Opcion 0 = Ordear por nome
 	// Opcion 1 = Ordear por prezo
-	// Opcion 3 = Ordear por categoria
+	// Opcion 2 = Ordear por categoria
 	
 	public Busqueda ordear(Busqueda busqueda, int opcion);
 

@@ -43,43 +43,43 @@ public class Busqueda {
     }
     
 
-	private String getLocalizacion() {
+	public String getLocalizacion() {
 		return localizacion;
 	}
 
-	private void setLocalizacion(String localizacion) {
+	public void setLocalizacion(String localizacion) {
 		this.localizacion = localizacion;
 	}
 
-	private Calendar getDataInicio() {
+	public Calendar getDataInicio() {
 		return dataInicio;
 	}
 
-	private void setDataInicio(Calendar dataInicio) {
+	public void setDataInicio(Calendar dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-	private Calendar getDataFin() {
+	public Calendar getDataFin() {
 		return dataFin;
 	}
 
-	private void setDataFin(Calendar dataFin) {
+	public void setDataFin(Calendar dataFin) {
 		this.dataFin = dataFin;
 	}
 
-	private int getNumPerPorHab() {
+	public int getNumPerPorHab() {
 		return numPerPorHab;
 	}
 
-	private void setNumPerPorHab(int numPerPorHab) {
+	public void setNumPerPorHab(int numPerPorHab) {
 		this.numPerPorHab = numPerPorHab;
 	}
 
-	private int getCategoria() {
+	public int getCategoria() {
 		return categoria;
 	}
 
-	private void setCategoria(int categoria) {
+	public void setCategoria(int categoria) {
 		this.categoria = categoria;
 	}
 
