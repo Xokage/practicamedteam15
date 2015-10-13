@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 public interface SqlBusquedaDao {
 	
-	public Busqueda buscarHabitacion(Connection connection, String localizacion, 
+	public Busqueda realizarBusqueda(Connection connection, String localizacion, 
 			Calendar dataInicio, Calendar dataFin, int numPersoas);
 	
 	

@@ -39,7 +39,7 @@ public class Busqueda {
     }
     
     
-    public Busqueda(String localizacion, Calendar dataInicio, Calendar dataFin, int numPerPorHab) {
+    public Busqueda(String localizacion, Calendar dataInicio, Calendar dataFin, int numPerPorHab, List<Hotel> hoteis) {
    
     	this.localizacion = localizacion;
     	if(dataInicio != null)
@@ -50,10 +50,11 @@ public class Busqueda {
     		dataFin.set(Calendar.MILLISECOND, 0); //Workaround for rounding errors
     	this.dataFin = dataFin;
     	this.numPerPorHab = numPerPorHab;
+    	this.hoteis = hoteis;
     }
 
-    public Busqueda(Long id, String localizacion, Calendar dataInicio, Calendar dataFin, int numPerPorHab) {
-    	this(localizacion,dataInicio,dataFin,numPerPorHab);
+    public Busqueda(Long id, String localizacion, Calendar dataInicio, Calendar dataFin, int numPerPorHab, List<Hotel> hoteis) {
+    	this(localizacion,dataInicio,dataFin,numPerPorHab,hoteis);
     	this.id = id;
     }
 
