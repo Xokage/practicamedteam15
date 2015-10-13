@@ -19,8 +19,6 @@ import org.hibernate.annotations.Immutable;
  * @author Urist
  */
 
-@Entity
-@Immutable
 public class Reserva {
 
     private Long id;

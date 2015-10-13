@@ -11,7 +11,7 @@ import javax.persistence.Entity;
  *
  * @author Urist
  */
-@Entity
+
 public class Habitacion {
 
     private Long id;
