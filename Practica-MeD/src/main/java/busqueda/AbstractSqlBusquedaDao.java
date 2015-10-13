@@ -14,60 +14,69 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
 	public Busqueda realizarBusqueda(Connection connection,
 			String localizacion, Calendar dataInicio, Calendar dataFin,
-			int numPersoas) {
+			int numPersoas, int opcion) {
 
 		String queryString = "SELECT id, nome, localizacion, descricion, "
-        		+ "categoria, temporadaInicio, temporadaFin, servizos, "
-        		+ "telefono FROM Hotel WHERE (LOWER(localizacion) LIKE LOWER(?))";
-		try (PreparedStatement preparedStatement = connection.prepareStatement(queryString)) {
+				+ "categoria, temporadaInicio, temporadaFin, servizos, "
+				+ "telefono FROM Hotel WHERE (LOWER(localizacion) LIKE LOWER(?))";
 
-        	/* Fill "preparedStatement". */
-            int i = 1;
-            preparedStatement.setString(i++, "%"+localizacion+"%");
+		// ordear por nome
+		if (opcion == 0) {
+			queryString += " ORDER BY nome";
+		}
 
-            /* Execute query. */
-            ResultSet resultSet = preparedStatement.executeQuery();
+		// ordear por prezo
+		if (opcion == 1) {
 
-            /* Get hotels */
-            
-            List<Hotel> hoteis = new ArrayList<Hotel>();
+		}
 
-            while (resultSet.next()) {
+		// ordear por Categoria
+		if (opcion == 2) {
+			queryString += " ORDER BY categoria";
+		}
+		try (PreparedStatement preparedStatement = connection
+				.prepareStatement(queryString)) {
 
-                i = 1;
-                
-                Long newId = resultSet.getLong(i++); 
-                String newNome= resultSet.getString(i++);
-                String newLocalizacion = resultSet.getString(i++);
-                String newDescricion = resultSet.getString(i++);
-                Integer newCategoria = resultSet.getInt(i++);
-                Calendar newTemporadaInicio = Calendar.getInstance();
-                newTemporadaInicio.setTime(resultSet.getTimestamp(i++));
-                Calendar newTemporadaFin = Calendar.getInstance();
-                newTemporadaFin.setTime(resultSet.getTimestamp(i++));
-                String newServizos = resultSet.getString(i++);
-                String newTelefono = resultSet.getString(i++);
-                
-                
-                
-                hoteis.add(new Hotel(newId, newNome, newLocalizacion, newDescricion, newCategoria, newTemporadaInicio,
-                		newTemporadaFin, newServizos, newTelefono));
+			/* Fill "preparedStatement". */
+			int i = 1;
+			preparedStatement.setString(i++, "%" + localizacion + "%");
 
-            }
-            
-            
-            return new Busqueda(localizacion,dataInicio,dataFin,numPersoas,hoteis);
+			/* Execute query. */
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			/* Get hotels */
+
+			List<Hotel> hoteis = new ArrayList<Hotel>();
+
+			while (resultSet.next()) {
+
+				i = 1;
+
+				Long newId = resultSet.getLong(i++);
+				String newNome = resultSet.getString(i++);
+				String newLocalizacion = resultSet.getString(i++);
+				String newDescricion = resultSet.getString(i++);
+				Integer newCategoria = resultSet.getInt(i++);
+				Calendar newTemporadaInicio = Calendar.getInstance();
+				newTemporadaInicio.setTime(resultSet.getTimestamp(i++));
+				Calendar newTemporadaFin = Calendar.getInstance();
+				newTemporadaFin.setTime(resultSet.getTimestamp(i++));
+				String newServizos = resultSet.getString(i++);
+				String newTelefono = resultSet.getString(i++);
+
+				hoteis.add(new Hotel(newId, newNome, newLocalizacion,
+						newDescricion, newCategoria, newTemporadaInicio,
+						newTemporadaFin, newServizos, newTelefono));
+
+			}
+
+			return new Busqueda(localizacion, dataInicio, dataFin, numPersoas,
+					hoteis);
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 
-	}
-
-	@Override
-	public Busqueda ordear(Connection connection, Busqueda busqueda, int opcion) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
