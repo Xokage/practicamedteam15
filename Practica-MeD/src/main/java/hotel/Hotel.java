@@ -23,32 +23,25 @@ import org.hibernate.annotations.BatchSize;
 
 
 
-//TODO Quitar integer numeroDeHabitacions e poñer unha consulta a base de datos co dao.
 
-@Entity
-@BatchSize(size=10)
 public class Hotel {
 
     private Long id;
     private String nome;
     private String localizacion;
     private String descricion;
-    private int categoria;
+    private Integer categoria;
     private Calendar temporadaInicio;
     private Calendar temporadaFin;
     private String servizos;
     private String telefono;
-    private int numHabitacions;
 
-    private List<Reserva> reservas;
-    
     public Hotel() {
     	
     }
     
-    public Hotel(String nome, String localizacion, String descricion, int categoria, 
-    		Calendar temporadaInicio, Calendar temporadaFin, String servizos,
-    		int numHabitacions) {
+    public Hotel(String nome, String localizacion, String descricion, Integer categoria, 
+    		Calendar temporadaInicio, Calendar temporadaFin, String servizos, String telefono) {
     		
     	this.nome = nome;
     	this.localizacion = localizacion;
@@ -57,11 +50,16 @@ public class Hotel {
     	this.temporadaInicio = temporadaInicio;
     	this.temporadaFin = temporadaFin;
     	this.servizos = servizos;
-    	this.numHabitacions = numHabitacions;
-    	this.reservas = new ArrayList<>();
+    	this.telefono = telefono;
     	
     }
 
+    public Hotel(Long id, String nome, String localizacion, String descricion, Integer categoria, 
+    		Calendar temporadaInicio, Calendar temporadaFin, String servizos, String telefono) {
+    	this(nome,localizacion,descricion,categoria,temporadaInicio,temporadaFin,servizos,telefono);
+    	this.id = id;
+    }
+    
     private Calendar getTemporadaInicio() {
 		return temporadaInicio;
 	}
@@ -91,12 +89,6 @@ public class Hotel {
     }
 
     public void cambiarEstadoHabitacion(Habitacion h) {
-
-    }
-
-    public void realizarReserva(String nome, String dni,
-            Date dataEntrada, Date dataSaida, int numHabitacions,
-            int persoasPorHabitacion) {
 
     }
 
@@ -132,7 +124,7 @@ public class Hotel {
         this.descricion = descricion;
     }
 
-    public int getCategoria() {
+    public Integer getCategoria() {
         return categoria;
     }
 
@@ -156,21 +148,4 @@ public class Hotel {
         this.telefono = telefono;
     }
 
-    public int getNumHabitacions() {
-        return numHabitacions;
-    }
-
-    public void setNumHabitacions(int numHabitacions) {
-        this.numHabitacions = numHabitacions;
-    }
-
-    public List<Reserva> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
-    }
-    
-    
 }

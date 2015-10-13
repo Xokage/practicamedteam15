@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import java.util.Calendar;
 
 import main.java.hotel.Habitacion;
-import main.java.hotel.HabitacionDao;
+import main.java.hotel.SqlHabitacionDao;
 import main.java.hotel.Hotel;
-import main.java.hotel.HotelDao;
+import main.java.hotel.SqlHotelDao;
 import main.java.hotel.HotelService;
 
 import org.glassfish.jersey.test.JerseyTest;
@@ -16,8 +16,8 @@ import org.junit.Test;
 public class BuscarHotel extends JerseyTest {
 
 	private HotelService hs;
-	private HotelDao	hd;
-	private HabitacionDao habd;
+	private SqlHotelDao	hd;
+	private SqlHabitacionDao habd;
 	
 	
 	@Test

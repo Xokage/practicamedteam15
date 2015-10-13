@@ -9,6 +9,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,15 +23,12 @@ import main.java.hotel.Hotel;
  * @author Urist
  */
 
-@Entity
 public class Busqueda {
 
     private Long id;
     private List<Filtro> filtros;
     private String localizacion;
-    @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataInicio;
-    @Temporal(TemporalType.TIMESTAMP)
     private Calendar dataFin;
     private int numPerPorHab;
     private int categoria;
@@ -39,9 +40,30 @@ public class Busqueda {
     
     
     public Busqueda(String localizacion, Calendar dataInicio, Calendar dataFin, int numPerPorHab) {
-    	
+   
+    	this.localizacion = localizacion;
+    	if(dataInicio != null)
+    		dataInicio.set(Calendar.MILLISECOND, 0); //Workaround for rounding errors
+    	this.dataInicio = dataInicio;
+
+    	if(dataFin != null)
+    		dataFin.set(Calendar.MILLISECOND, 0); //Workaround for rounding errors
+    	this.dataFin = dataFin;
+    	this.numPerPorHab = numPerPorHab;
     }
-    
+
+    public Busqueda(Long id, String localizacion, Calendar dataInicio, Calendar dataFin, int numPerPorHab) {
+    	this(localizacion,dataInicio,dataFin,numPerPorHab);
+    	this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+	
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 	public String getLocalizacion() {
 		return localizacion;
@@ -59,6 +81,7 @@ public class Busqueda {
 		this.dataInicio = dataInicio;
 	}
 
+	
 	public Calendar getDataFin() {
 		return dataFin;
 	}
@@ -83,13 +106,6 @@ public class Busqueda {
 		this.categoria = categoria;
 	}
 
-	public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public List<Filtro> getFiltros() {
         return filtros;
