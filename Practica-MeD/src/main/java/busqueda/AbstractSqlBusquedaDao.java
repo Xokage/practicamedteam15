@@ -25,9 +25,9 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 			queryString += " ORDER BY nome";
 		}
 
-		// ordear por prezo
+		// ordear por servizos
 		if (opcion == 1) {
-
+			queryString += " ORDER BY servizos";
 		}
 
 		// ordear por Categoria
