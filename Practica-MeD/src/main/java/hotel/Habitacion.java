@@ -5,6 +5,8 @@
  */
 package main.java.hotel;
 
+import java.util.Calendar;
+
 import javax.persistence.Entity;
 
 /**
@@ -21,7 +23,26 @@ public class Habitacion {
     private boolean estado;
 
     private Hotel idHotel; //Aqui teria que ser unha Entidade si seguimos o modelo PA
+    
+    
+public Habitacion() {
+    	
+    }
+    
+    
+    public Habitacion(Float prezo, int numCamas, String servizos, boolean estado) {
+   
+    	this.prezo = prezo;
+    	this.numCamas = numCamas;
+    	this.servizos = servizos;
+    	this.estado = estado;
+    }
 
+    public Habitacion(Long id, Float prezo, int numCamas, String servizos, boolean estado) {
+    	this(prezo,numCamas,servizos,estado);
+    	this.id = id;
+    }
+    
     public Long getId() {
         return id;
     }
