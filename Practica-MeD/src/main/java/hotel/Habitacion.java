@@ -22,7 +22,7 @@ public class Habitacion {
     private String servizos;
     private boolean estado;
 
-    private Hotel idHotel; //Aqui teria que ser unha Entidade si seguimos o modelo PA
+    private Long idHotel; 
     
     
 public Habitacion() {
@@ -30,7 +30,7 @@ public Habitacion() {
     }
     
     
-    public Habitacion(Float prezo, int numCamas, String servizos, boolean estado) {
+    public Habitacion(Float prezo, int numCamas, String servizos, boolean estado, Long idHotel) {
    
     	this.prezo = prezo;
     	this.numCamas = numCamas;
@@ -38,8 +38,8 @@ public Habitacion() {
     	this.estado = estado;
     }
 
-    public Habitacion(Long id, Float prezo, int numCamas, String servizos, boolean estado) {
-    	this(prezo,numCamas,servizos,estado);
+    public Habitacion(Long id, Float prezo, int numCamas, String servizos, boolean estado, Long idHotel) {
+    	this(prezo,numCamas,servizos,estado,idHotel);
     	this.id = id;
     }
     
@@ -83,11 +83,11 @@ public Habitacion() {
         this.estado = estado;
     }
 
-    public Hotel getIdHotel() {
+    public Long getIdHotel() {
         return idHotel;
     }
 
-    public void setIdHotel(Hotel idHotel) {
+    public void setIdHotel(Long idHotel) {
         this.idHotel = idHotel;
     }
 
