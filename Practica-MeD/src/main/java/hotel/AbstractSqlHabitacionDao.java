@@ -38,10 +38,10 @@ public abstract class AbstractSqlHabitacionDao implements SqlHabitacionDao {
 			Integer newNumCamas = resultSet.getInt(i++);
 			String newServizos = resultSet.getString(i++);
 			boolean newEstado = resultSet.getBoolean(i++);
-			// Integer newIdHotel = resultSet.getInt(i++);
-
+			Long newIdHotel = resultSet.getLong(i++);
+			
 			return new Habitacion(newId, newPrezo, newNumCamas, newServizos,
-					newEstado);
+					newEstado, newIdHotel);
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -52,7 +52,7 @@ public abstract class AbstractSqlHabitacionDao implements SqlHabitacionDao {
 
 		/* Create "queryString". */
 		String queryString = "SELECT id, prezo, numCamas, servizos, "
-				+ "estado FROM Habitacion WHERE idHotel = ?";
+				+ "estado, idHotel FROM Habitacion WHERE idHotel = ?";
 
 		try (PreparedStatement preparedStatement = connection
 				.prepareStatement(queryString)) {
@@ -77,10 +77,10 @@ public abstract class AbstractSqlHabitacionDao implements SqlHabitacionDao {
 				Integer newNumCamas = resultSet.getInt(i++);
 				String newServizos = resultSet.getString(i++);
 				boolean newEstado = resultSet.getBoolean(i++);
-				// Integer newIdHotel = resultSet.getInt(i++);
+				Long newIdHotel = resultSet.getLong(i++);
 
 				habitacions.add(new Habitacion(newId, newPrezo, newNumCamas,
-						newServizos, newEstado));
+						newServizos, newEstado, newIdHotel));
 
 			}
 
