@@ -12,51 +12,51 @@ import main.java.hotel.Hotel;
 
 public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
-	protected AbstractSqlBusquedaDao() {
-	}
-
-	@Override
-	public Busqueda buscarHabitacion(Connection connection,
+	public Busqueda realizarBusqueda(Connection connection,
 			String localizacion, Calendar dataInicio, Calendar dataFin,
 			int numPersoas) {
 
-		String queryString = "SELECT idHotel FROM Hotel WHERE localizacion = ?";
-		try (PreparedStatement preparedStatement = connection
-				.prepareStatement(queryString)) {
+		String queryString = "SELECT id, nome, localizacion, descricion, "
+        		+ "categoria, temporadaInicio, temporadaFin, servizos, "
+        		+ "telefono FROM Hotel WHERE (LOWER(localizacion) LIKE LOWER(?))";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(queryString)) {
 
-			List<Long> hoteis = new ArrayList<Long>();
-			/* Fill "preparedStatement". */
-			int i = 1;
-			preparedStatement.setString(i++, localizacion);
+        	/* Fill "preparedStatement". */
+            int i = 1;
+            preparedStatement.setString(i++, "%"+localizacion+"%");
 
-			/* Execute query. */
-			ResultSet resultSet = preparedStatement.executeQuery();
+            /* Execute query. */
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-			/*
-			 * if (!resultSet.next()) { throw new
-			 * InstanceNotFoundException(eventId, Event.class.getName()); }
-			 */
+            /* Get hotels */
+            
+            List<Hotel> hoteis = new ArrayList<Hotel>();
 
-			while (resultSet.next()) {
+            while (resultSet.next()) {
 
-				int j = 1;
+                i = 1;
+                
+                Long newId = resultSet.getLong(i++); 
+                String newNome= resultSet.getString(i++);
+                String newLocalizacion = resultSet.getString(i++);
+                String newDescricion = resultSet.getString(i++);
+                Integer newCategoria = resultSet.getInt(i++);
+                Calendar newTemporadaInicio = Calendar.getInstance();
+                newTemporadaInicio.setTime(resultSet.getTimestamp(i++));
+                Calendar newTemporadaFin = Calendar.getInstance();
+                newTemporadaFin.setTime(resultSet.getTimestamp(i++));
+                String newServizos = resultSet.getString(i++);
+                String newTelefono = resultSet.getString(i++);
+                
+                
+                
+                hoteis.add(new Hotel(newId, newNome, newLocalizacion, newDescricion, newCategoria, newTemporadaInicio,
+                		newTemporadaFin, newServizos, newTelefono));
 
-				Long k = resultSet.getLong(i++);
-				hoteis.add(k);
-			}
-
-			String queryString2 = "SELECT prezo, numCamas, estado FROM Habitacion WHERE idhotel IN ?";
-
-			if (dataInicio != null) {
-				queryString2 += " AND dataInicio BETWEEN ? AND ?";
-			}
-			if (dataFin != null) {
-				queryString2 += " AND dataFin BETWEEN ? AND ?";
-			}
-			
-			
-			
-			return null;
+            }
+            
+            
+            return new Busqueda(localizacion,dataInicio,dataFin,numPersoas,hoteis);
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
