@@ -8,7 +8,7 @@ import main.java.hotel.Hotel;
 //import org.springframework.stereotype.Repository;
 
 //@Repository("BusquedaDao")
-public class BusquedaDaoHibernate implements BusquedaDao {
+public class BusquedaDaoHibernate implements SqlBusquedaDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
