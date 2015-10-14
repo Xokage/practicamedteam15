@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 public interface BusquedaService {
 	
-	public Busqueda realizarBusqueda(Connection connection, String localizacion, 
+	public Busqueda realizarBusqueda(String localizacion, 
 			Calendar dataInicio, Calendar dataFin, int numPersoas, int opcion);
 	
 	
