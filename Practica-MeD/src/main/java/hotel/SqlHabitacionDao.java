@@ -7,7 +7,7 @@ import java.util.List;
 public interface SqlHabitacionDao {
 	//ONLY FOR TESTING
 	public Habitacion getHabitacion(Connection connection, Long id);
-	public Habitacion addHabitacion(Connection connection, Hotel hotel, Float prezo, int numCamas,
+	public Habitacion addHabitacion(Connection connection, Long idHotel, Float prezo, int numCamas,
 			String servizos);
 	public void delHabitacion(Connection connection, Long id);
 
