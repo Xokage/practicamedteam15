@@ -1,0 +1,2 @@
+Incluír a librería mysql-connector-java-5.1.27.jar en Tomcat copiandoo á subcarpeta lib do
+directorio de instalación do Tomcat.

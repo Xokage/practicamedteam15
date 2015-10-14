@@ -62,11 +62,16 @@ public class BusquedaRest {
 		}
 		int opcion = 0; 
 		if(queryParams.getFirst("opcion")!=null){
-			numPersoas = Integer.parseInt(queryParams.getFirst("opcion"));
+			opcion = Integer.parseInt(queryParams.getFirst("opcion"));
 		}
+		boolean desc = false;
+		if(queryParams.getFirst("desc")!=null){
+			desc = Boolean.parseBoolean((queryParams.getFirst("desc")));
+		}
+		
 
 		Busqueda busqueda = busquedaService.realizarBusqueda(localizacion,
-				dataInicio, dataFin, numPersoas, opcion);
+				dataInicio, dataFin, numPersoas, opcion, desc);
 		String result = "<?xml version=\"1.0\"?>" + "<hoteis>";
 		for (Hotel h : busqueda.getHoteis()) {
 			result = result + "<hotel>" + "<id>" + h.getId() + "</id>"

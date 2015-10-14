@@ -24,7 +24,7 @@ public class BusquedaServiceImpl implements BusquedaService {
 	
 	@Override
 	public Busqueda realizarBusqueda(String localizacion, Calendar dataInicio, Calendar dataFin,
-			int numPersoas, int opcion) {
+			int numPersoas, int opcion, boolean desc) {
 		
 		try (Connection connection = dataSource.getConnection()) {
 
@@ -35,7 +35,7 @@ public class BusquedaServiceImpl implements BusquedaService {
                 connection.setAutoCommit(false);
 
                 /* Do work. */
-                Busqueda busqueda =  busquedaDao.realizarBusqueda(connection, localizacion, dataInicio, dataFin, numPersoas, opcion);
+                Busqueda busqueda =  busquedaDao.realizarBusqueda(connection, localizacion, dataInicio, dataFin, numPersoas, opcion, desc);
 
                 /* Commit. */
                 connection.commit();

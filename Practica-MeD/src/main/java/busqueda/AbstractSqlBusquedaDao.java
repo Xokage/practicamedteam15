@@ -14,7 +14,7 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
 	public Busqueda realizarBusqueda(Connection connection,
 			String localizacion, Calendar dataInicio, Calendar dataFin,
-			int numPersoas, int opcion) {
+			int numPersoas, int opcion, boolean desc) {
 
 		String queryString = "SELECT id, nome, localizacion, descricion, "
 				+ "categoria, temporadaInicio, temporadaFin, servizos, "
@@ -34,6 +34,12 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 		if (opcion == 2) {
 			queryString += " ORDER BY categoria";
 		}
+
+		if (desc) {
+			queryString += " DESC";
+		} else
+			queryString += " ASC";
+		
 		try (PreparedStatement preparedStatement = connection
 				.prepareStatement(queryString)) {
 
