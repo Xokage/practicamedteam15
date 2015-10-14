@@ -4,7 +4,7 @@ import main.java.util.ConfigurationParametersManager;
 
 public class SqlBusquedaDaoFactory {
 	
-	private final static String CLASS_NAME_PARAMETER = "SqlEventDaoFactory.className";
+	private final static String CLASS_NAME_PARAMETER = "SqlBusquedaDaoFactory.className";
     private static SqlBusquedaDao dao = null;
     
     private SqlBusquedaDaoFactory () {

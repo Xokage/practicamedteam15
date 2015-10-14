@@ -1,17 +1,18 @@
 package main.java.busqueda;
 
+import java.sql.Connection;
 import java.util.Calendar;
 
 public interface BusquedaService {
 	
-	public String buscarHabitacion(String localizacion, 
-			Calendar dataInicio, Calendar dataFin, int numPersoas);
+	public Busqueda realizarBusqueda(Connection connection, String localizacion, 
+			Calendar dataInicio, Calendar dataFin, int numPersoas, int opcion);
 	
 	
 	// Opcion 0 = Ordear por nome
 	// Opcion 1 = Ordear por prezo
 	// Opcion 3 = Ordear por categoria
 	
-	public String ordear(int opcion);
+	
 
 }
