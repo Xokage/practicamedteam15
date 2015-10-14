@@ -1,6 +1,7 @@
-package main.java.busqueda;
+package main.java.rest;
 
 import static main.java.util.ModelConstants.BUSQUEDA_DATA_SOURCE;
+
 import java.sql.Connection;
 import java.util.Calendar;
 
@@ -12,17 +13,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import main.java.busqueda.Busqueda;
+import main.java.busqueda.BusquedaService;
+import main.java.busqueda.SqlBusquedaDao;
+import main.java.busqueda.SqlBusquedaDaoFactory;
+
 @Path("busqueda")
-public class BusquedaServiceRest implements BusquedaService {
-	
-	private DataSource dataSource;
-	SqlBusquedaDao busquedaDao = null;
+public class BusquedaRest{
 	
 	
-	public BusquedaServiceRest() {
-        dataSource = DataSourceLocator.getDataSource(BUSQUEDA_DATA_SOURCE);
-        busquedaDao = SqlBusquedaDaoFactory.getDao();
-    }
+	
+	
+	
 	
 	@GET
 	@Produces(MediaType.TEXT_XML)
@@ -31,17 +33,11 @@ public class BusquedaServiceRest implements BusquedaService {
 	@QueryParam("dataFin") Calendar dataFin,
 	@DefaultValue("1") @QueryParam("numPersoas") int numPersoas,@DefaultValue("0") @QueryParam("opcion") int opcion) {
 		
-		Busqueda busqueda = busquedaDao.realizarBusqueda(connection, localizacion, dataInicio, dataFin, numPersoas, opcion)
-		return 
+		//Busqueda busqueda = busquedaDao.realizarBusqueda(connection, localizacion, dataInicio, dataFin, numPersoas, opcion)
+		return null;
 		
 	}
 	
 	
-	@Override
-	public Busqueda realizarBusqueda(Connection connection,
-			String localizacion, Calendar dataInicio, Calendar dataFin,
-			int numPersoas, int opcion) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }
