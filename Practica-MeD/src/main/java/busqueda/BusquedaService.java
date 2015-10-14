@@ -6,7 +6,7 @@ import java.util.Calendar;
 public interface BusquedaService {
 	
 	public Busqueda realizarBusqueda(String localizacion, 
-			Calendar dataInicio, Calendar dataFin, int numPersoas, int opcion);
+			Calendar dataInicio, Calendar dataFin, int numPersoas, int opcion, boolean desc);
 	
 	
 	// Opcion 0 = Ordear por nome

@@ -11,7 +11,7 @@ public interface SqlBusquedaDao {
 	**/
 	
 	public Busqueda realizarBusqueda(Connection connection, String localizacion, 
-			Calendar dataInicio, Calendar dataFin, int numPersoas, int opcion);
+			Calendar dataInicio, Calendar dataFin, int numPersoas, int opcion, boolean desc);
 	
 	
 	
