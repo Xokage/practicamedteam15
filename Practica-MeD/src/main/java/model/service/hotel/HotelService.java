@@ -1,4 +1,4 @@
-package main.java.hotel;
+package main.java.model.service.hotel;
 
 import java.util.Calendar;
 

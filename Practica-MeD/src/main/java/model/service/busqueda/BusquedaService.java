@@ -1,7 +1,9 @@
-package main.java.busqueda;
+package main.java.model.service.busqueda;
 
 import java.sql.Connection;
 import java.util.Calendar;
+
+import main.java.model.db.busqueda.Busqueda;
 
 public interface BusquedaService {
 	

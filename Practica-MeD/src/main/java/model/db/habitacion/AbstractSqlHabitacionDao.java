@@ -1,11 +1,10 @@
-package main.java.hotel;
+package main.java.model.db.habitacion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public abstract class AbstractSqlHabitacionDao implements SqlHabitacionDao {
@@ -13,8 +12,8 @@ public abstract class AbstractSqlHabitacionDao implements SqlHabitacionDao {
 	public Habitacion getHabitacion(Connection connection, Long id) {
 
 		/* Create "queryString". */
-		String queryString = "SELECT id, prezo, numCamas, servizos, "
-				+ "estado FROM Habitacion WHERE id = ?";
+		String queryString = "SELECT id, prezo, numCamas, idHotel "
+				+ "FROM Habitacion WHERE id = ?";
 
 		try (PreparedStatement preparedStatement = connection
 				.prepareStatement(queryString)) {
@@ -36,12 +35,9 @@ public abstract class AbstractSqlHabitacionDao implements SqlHabitacionDao {
 			Long newId = resultSet.getLong(i++);
 			Float newPrezo = resultSet.getFloat(i++);
 			Integer newNumCamas = resultSet.getInt(i++);
-			String newServizos = resultSet.getString(i++);
-			boolean newEstado = resultSet.getBoolean(i++);
 			Long newIdHotel = resultSet.getLong(i++);
-			
-			return new Habitacion(newId, newPrezo, newNumCamas, newServizos,
-					newEstado, newIdHotel);
+
+			return new Habitacion(newId, newPrezo, newNumCamas, newIdHotel);
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -51,8 +47,8 @@ public abstract class AbstractSqlHabitacionDao implements SqlHabitacionDao {
 	public List<Habitacion> findHabitacion(Connection connection, Long idHotel) {
 
 		/* Create "queryString". */
-		String queryString = "SELECT id, prezo, numCamas, servizos, "
-				+ "estado, idHotel FROM Habitacion WHERE idHotel = ?";
+		String queryString = "SELECT id, prezo, numCamas,"
+				+ " idHotel FROM Habitacion WHERE idHotel = ?";
 
 		try (PreparedStatement preparedStatement = connection
 				.prepareStatement(queryString)) {
@@ -75,12 +71,10 @@ public abstract class AbstractSqlHabitacionDao implements SqlHabitacionDao {
 				Long newId = resultSet.getLong(i++);
 				Float newPrezo = resultSet.getFloat(i++);
 				Integer newNumCamas = resultSet.getInt(i++);
-				String newServizos = resultSet.getString(i++);
-				boolean newEstado = resultSet.getBoolean(i++);
 				Long newIdHotel = resultSet.getLong(i++);
 
 				habitacions.add(new Habitacion(newId, newPrezo, newNumCamas,
-						newServizos, newEstado, newIdHotel));
+						newIdHotel));
 
 			}
 
@@ -92,28 +86,29 @@ public abstract class AbstractSqlHabitacionDao implements SqlHabitacionDao {
 		}
 
 	}
-	
+
 	public void delHabitacion(Connection connection, Long id) {
-    	
-    	/* Create "queryString". */
-        String queryString = "DELETE FROM Habitacion WHERE" + " id = ?";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(queryString)) {
+		/* Create "queryString". */
+		String queryString = "DELETE FROM Habitacion WHERE" + " id = ?";
 
-            /* Fill "preparedStatement". */
-            int i = 1;
-            preparedStatement.setLong(i++, id);
+		try (PreparedStatement preparedStatement = connection
+				.prepareStatement(queryString)) {
 
-            /* Execute query. */
-            int removedRows = preparedStatement.executeUpdate();
+			/* Fill "preparedStatement". */
+			int i = 1;
+			preparedStatement.setLong(i++, id);
 
-            if (removedRows == 0) {
-            	System.err.println("Habitacion id:" + id + " non atopado.");
-            }
+			/* Execute query. */
+			int removedRows = preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+			if (removedRows == 0) {
+				System.err.println("Habitacion id:" + id + " non atopado.");
+			}
 
-    }
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
 }

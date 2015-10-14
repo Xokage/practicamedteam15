@@ -1,4 +1,4 @@
-package main.java.busqueda;
+package main.java.model.db.busqueda;
 
 import main.java.util.ConfigurationParametersManager;
 
@@ -12,8 +12,8 @@ public class SqlBusquedaDaoFactory {
     
     @SuppressWarnings("rawtypes")
 	private static SqlBusquedaDao getInstance() {
-        try {
-            String daoClassName = ConfigurationParametersManager.getParameter(CLASS_NAME_PARAMETER);
+		try {
+			String daoClassName = ConfigurationParametersManager.getParameter(CLASS_NAME_PARAMETER);
             Class daoClass = Class.forName(daoClassName);
             return (SqlBusquedaDao) daoClass.newInstance();
         } catch (Exception e) {

@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.busqueda;
+package main.java.model.db.filtro;
+
+import main.java.model.db.busqueda.Busqueda;
 
 /**
  *

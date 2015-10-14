@@ -1,4 +1,4 @@
-package main.java.busqueda;
+package main.java.model.service.busqueda;
 
 import static main.java.util.ModelConstants.BUSQUEDA_DATA_SOURCE;
 
@@ -9,6 +9,9 @@ import java.util.Calendar;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import main.java.model.db.busqueda.Busqueda;
+import main.java.model.db.busqueda.SqlBusquedaDao;
+import main.java.model.db.busqueda.SqlBusquedaDaoFactory;
 import main.java.util.DataSourceLocator;
 
 public class BusquedaServiceImpl implements BusquedaService {
