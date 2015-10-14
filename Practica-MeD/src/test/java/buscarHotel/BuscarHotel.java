@@ -52,7 +52,6 @@ public class BuscarHotel extends JerseyTest {
 			"<hotel>" + 
 				"<id>" + newHotel.getId() + "</id>" + 
 				"<nome>" + nome + "</nome>" +
-				"<prezo>" + prezoHab + "</prezo>" +
 			"</hotel>" + // O que esperamos que devolva o test.
 	    "</hoteis>";
 		//Parametros individuais

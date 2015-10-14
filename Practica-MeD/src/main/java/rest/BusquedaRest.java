@@ -17,27 +17,38 @@ import main.java.busqueda.Busqueda;
 import main.java.busqueda.BusquedaService;
 import main.java.busqueda.SqlBusquedaDao;
 import main.java.busqueda.SqlBusquedaDaoFactory;
+import main.java.hotel.Hotel;
 
 @Path("busqueda")
-public class BusquedaRest{
-	
-	
-	
-	
-	
-	
+public class BusquedaRest {
+
+	BusquedaService busquedaService;
+
 	@GET
 	@Produces(MediaType.TEXT_XML)
 	public String buscarXML(@QueryParam("localizacion") String localizacion,
-	@QueryParam("dataInicio") Calendar dataInicio,
-	@QueryParam("dataFin") Calendar dataFin,
-	@DefaultValue("1") @QueryParam("numPersoas") int numPersoas,@DefaultValue("0") @QueryParam("opcion") int opcion) {
-		
-		//Busqueda busqueda = busquedaDao.realizarBusqueda(connection, localizacion, dataInicio, dataFin, numPersoas, opcion)
-		return null;
-		
+			@QueryParam("dataInicio") Calendar dataInicio,
+			@QueryParam("dataFin") Calendar dataFin,
+			@DefaultValue("1") @QueryParam("numPersoas") int numPersoas,
+			@DefaultValue("0") @QueryParam("opcion") int opcion) {
+
+		Busqueda busqueda = busquedaService.realizarBusqueda(localizacion,
+				dataInicio, dataFin, numPersoas, opcion);
+		String result = "<?xml version=\"1.0\"?>" + "<hoteis>";
+		for (Hotel h : busqueda.getHoteis()) {
+			result = result + "<hotel>" + "<id>" + h.getId() + "</id>"
+					+ "<nome>" + h.getNome() + "</nome>" + "</hotel>"; // O que
+																		// esperamos
+																		// que
+																		// devolva
+																		// o
+																		// test.
+
+		}
+		result += "</hoteis>";
+
+		return result;
+
 	}
-	
-	
-	
+
 }
