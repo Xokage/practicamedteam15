@@ -1,30 +1,21 @@
 package main.java.rest;
 
-import static main.java.util.ModelConstants.BUSQUEDA_DATA_SOURCE;
-
-import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
-import javax.sql.DataSource;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 
-import main.java.busqueda.Busqueda;
-import main.java.busqueda.BusquedaService;
-import main.java.busqueda.BusquedaServiceImpl;
-import main.java.busqueda.SqlBusquedaDao;
-import main.java.busqueda.SqlBusquedaDaoFactory;
-import main.java.hotel.Hotel;
+import main.java.model.db.busqueda.Busqueda;
+import main.java.model.db.hotel.Hotel;
+import main.java.model.service.busqueda.BusquedaService;
+import main.java.model.service.busqueda.BusquedaServiceImpl;
 
 @Path("busqueda")
 public class BusquedaRest {
@@ -45,7 +36,8 @@ public class BusquedaRest {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-		} else dataInicio = null;
+		} else
+			dataInicio = null;
 		Calendar dataFin = Calendar.getInstance();
 
 		if (queryParams.getFirst("dataFin") != null) {
@@ -54,21 +46,21 @@ public class BusquedaRest {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-		} else dataFin = null;
-		
+		} else
+			dataFin = null;
+
 		int numPersoas = 1;
-		if(queryParams.getFirst("numPersoas")!=null){
+		if (queryParams.getFirst("numPersoas") != null) {
 			numPersoas = Integer.parseInt(queryParams.getFirst("numPersoas"));
 		}
-		int opcion = 0; 
-		if(queryParams.getFirst("opcion")!=null){
+		int opcion = 0;
+		if (queryParams.getFirst("opcion") != null) {
 			opcion = Integer.parseInt(queryParams.getFirst("opcion"));
 		}
 		boolean desc = false;
-		if(queryParams.getFirst("desc")!=null){
+		if (queryParams.getFirst("desc") != null) {
 			desc = Boolean.parseBoolean((queryParams.getFirst("desc")));
 		}
-		
 
 		Busqueda busqueda = busquedaService.realizarBusqueda(localizacion,
 				dataInicio, dataFin, numPersoas, opcion, desc);

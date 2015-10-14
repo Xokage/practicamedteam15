@@ -1,4 +1,6 @@
-package main.java.busqueda;
+package main.java.model.service.filtro;
+
+import main.java.model.db.filtro.Filtro;
 
 public interface FiltroService {
 

@@ -1,4 +1,4 @@
-package main.java.busqueda;
+package main.java.model.db.busqueda;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import main.java.hotel.Hotel;
+import main.java.model.db.hotel.Hotel;
 
 public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
@@ -18,7 +18,8 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
 		String queryString = "SELECT id, nome, localizacion, descricion, "
 				+ "categoria, temporadaInicio, temporadaFin, servizos, "
-				+ "telefono FROM Hotel WHERE (LOWER(localizacion) LIKE LOWER(?))";
+				+ "telefono FROM Hotel WHERE (LOWER(localizacion) LIKE LOWER(?))"
+				+ " OR (LOWER(nome) LIKE LOWER(?))";
 
 		// ordear por nome
 		if (opcion == 0) {
@@ -39,12 +40,13 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 			queryString += " DESC";
 		} else
 			queryString += " ASC";
-		
+
 		try (PreparedStatement preparedStatement = connection
 				.prepareStatement(queryString)) {
 
 			/* Fill "preparedStatement". */
 			int i = 1;
+			preparedStatement.setString(i++, "%" + localizacion + "%");
 			preparedStatement.setString(i++, "%" + localizacion + "%");
 
 			/* Execute query. */

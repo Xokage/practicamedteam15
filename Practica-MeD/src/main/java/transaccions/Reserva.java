@@ -5,14 +5,10 @@
  */
 package main.java.transaccions;
 
-import main.java.hotel.Habitacion;
+import main.java.model.db.habitacion.Habitacion;
 
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Entity;
-
-import org.hibernate.annotations.Immutable;
 
 /**
  *

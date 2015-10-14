@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 
-import main.java.hotel.Habitacion;
-import main.java.hotel.SqlHabitacionDao;
-import main.java.hotel.Hotel;
-import main.java.hotel.SqlHotelDao;
-import main.java.hotel.HotelService;
+import main.java.model.db.habitacion.Habitacion;
+import main.java.model.db.habitacion.SqlHabitacionDao;
+import main.java.model.db.hotel.Hotel;
+import main.java.model.db.hotel.SqlHotelDao;
+import main.java.model.service.hotel.HotelService;
 
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
