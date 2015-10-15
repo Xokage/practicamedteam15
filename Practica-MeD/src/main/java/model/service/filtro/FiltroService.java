@@ -4,5 +4,5 @@ import main.java.model.db.filtro.Filtro;
 
 public interface FiltroService {
 
-	public String aplicarFiltro(Filtro filtro);
+	public Filtro findFiltro(String nome);
 }
