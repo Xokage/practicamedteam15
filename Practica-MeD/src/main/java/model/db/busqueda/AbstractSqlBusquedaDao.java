@@ -11,21 +11,35 @@ import java.util.List;
 import main.java.model.db.habitacion.Habitacion;
 import main.java.model.db.hotel.Hotel;
 import main.java.util.Pair;
+import main.java.util.SqlInjectionValidator;
+import main.java.model.db.filtro.Filtro;
 
 public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
+	@Override
 	public Busqueda realizarBusqueda(Connection connection,
 			String localizacion, Calendar dataInicio, Calendar dataFin,
-			int numPersoas, int opcion, boolean desc) {
+			int numPersoas, int opcion, boolean desc, List<Filtro> filtros) {
 
 		String queryString = "SELECT a.id, a.nome, a.localizacion, a.descricion, a.categoria, "
 				+ "a.temporadaInicio, a.temporadaFin, a.servizos, a.telefono, b.id, "
 				+ "MIN(b.prezo), b.numCamas FROM Hotel a JOIN Habitacion b ON a.id = b.idHotel "
-				+ "WHERE b.numCamas = ? AND (LOWER(a.localizacion) LIKE LOWER(?)) OR (LOWER(a.nome) LIKE LOWER(?)) GROUP BY a.id";
+				+ "WHERE (b.numCamas = ? AND (LOWER(a.localizacion) LIKE LOWER(?)) OR (LOWER(a.nome) LIKE LOWER(?))) ";
+
+		for (Filtro f : filtros) {
+			String tmpstring = f.getExpresion();
+			if (SqlInjectionValidator.validateString(tmpstring))
+				queryString += "AND " + f.getExpresion() + " ";
+		}
+		queryString += "GROUP BY a.id";
 
 		// ordear por nome
 		if (opcion == 0) {
 			queryString += " ORDER BY nome";
+		}
+
+		if (opcion == 1) {
+			queryString += " ORDER BY MIN(b.prezo)";
 		}
 
 		// ordear por Categoria
@@ -52,7 +66,7 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
 			/* Get hotels */
 
-			List<Pair<Hotel,Habitacion>> hoteis = new ArrayList<Pair<Hotel,Habitacion>>();
+			List<Pair<Hotel, Habitacion>> hoteis = new ArrayList<Pair<Hotel, Habitacion>>();
 
 			while (resultSet.next()) {
 
@@ -73,12 +87,12 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 				Long newHabId = resultSet.getLong(i++);
 				Float newHabPrezo = resultSet.getFloat(i++);
 				int newHabNumCamas = resultSet.getInt(i++);
-				
-				
-				hoteis.add(new Pair<Hotel, Habitacion>(new Hotel(newId, newNome, newLocalizacion,
-						newDescricion, newCategoria, newTemporadaInicio,
-						newTemporadaFin, newServizos, newTelefono),
-						new Habitacion(newHabId, newHabPrezo, newHabNumCamas, newId)));
+
+				hoteis.add(new Pair<Hotel, Habitacion>(new Hotel(newId,
+						newNome, newLocalizacion, newDescricion, newCategoria,
+						newTemporadaInicio, newTemporadaFin, newServizos,
+						newTelefono), new Habitacion(newHabId, newHabPrezo,
+						newHabNumCamas, newId)));
 
 			}
 
@@ -90,5 +104,4 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 		}
 
 	}
-
 }

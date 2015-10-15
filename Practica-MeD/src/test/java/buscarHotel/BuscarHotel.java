@@ -4,27 +4,66 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 
-import main.java.model.db.habitacion.Habitacion;
-import main.java.model.db.habitacion.SqlHabitacionDao;
-import main.java.model.db.hotel.Hotel;
-import main.java.model.db.hotel.SqlHotelDao;
-import main.java.model.service.hotel.HotelService;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.ws.rs.core.Application;
 
-import org.glassfish.jersey.test.JerseyTest;
+import main.java.model.db.habitacion.Habitacion;
+import main.java.model.db.hotel.Hotel;
+import main.java.model.service.habitacion.HabitacionService;
+import main.java.model.service.habitacion.HabitacionServiceImpl;
+import main.java.model.service.hotel.HotelService;
+import main.java.model.service.hotel.HotelServiceImpl;
+import main.java.rest.BusquedaRest;
+
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.sun.jersey.api.core.ClassNamesResourceConfig;
+import com.sun.jersey.spi.container.servlet.WebComponent;
+import com.sun.jersey.test.framework.JerseyTest;
+import com.sun.jersey.test.framework.WebAppDescriptor;
+import com.sun.jersey.test.framework.spi.container.TestContainerFactory;
+import com.sun.jersey.test.framework.spi.container.grizzly2.web.GrizzlyWebTestContainerFactory;
+
+
+
 
 public class BuscarHotel extends JerseyTest {
 
-	private HotelService hs;
-	private SqlHotelDao	hd;
-	private SqlHabitacionDao habd;
+	private HotelService hs = new HotelServiceImpl();
+	private HabitacionService has = new HabitacionServiceImpl();
 	
+
 	
+    @Override
+    public TestContainerFactory getTestContainerFactory() {
+        return new GrizzlyWebTestContainerFactory();
+    }
+ 
+    @Override
+    public WebAppDescriptor configure() {
+        return new WebAppDescriptor.Builder()
+            	.initParam(WebComponent.RESOURCE_CONFIG_CLASS,
+                      ClassNamesResourceConfig.class.getName())
+                .initParam(
+                      ClassNamesResourceConfig.PROPERTY_CLASSNAMES,
+                      BusquedaRest.class.getName() + ";").build();
+    }
+ 
+    
+    
+    
+    
 	@Test
-	public void testHabitacionDobleVimianzo()  {
+	public void testHabitacionDobleVimianzo() throws Exception  {
+		
 		//Inicializacion dos datos
 		
-	    Long id = null;
+		
 	    String nome = "Hotel Soneira";
 	    String localizacion = "Vimianzo";
 	    String descricion = "";
@@ -38,13 +77,10 @@ public class BuscarHotel extends JerseyTest {
 		final Hotel newHotel = hs.addHotel(nome, localizacion, descricion, categoria, 
 				temporadaInicio, temporadaFin, servizos, telefono);
 		
-	    Long idHab;
 	    Float prezoHab = 300f;
 	    int numCamasHab = 2;
-	    String servizosHab = "jacuzzi";
-	    boolean estadoHab = false;
 		
-		final Habitacion newHabitacion = habd.addHabitacion(newHotel, prezoHab, numCamasHab, servizosHab);
+		final Habitacion newHabitacion = has.addHabitacion(prezoHab, numCamasHab, newHotel.getId());
 		
 		//Parametros comuns aos tests
 		String testExpected = "<?xml version=\"1.0\"?>" + 
@@ -52,6 +88,10 @@ public class BuscarHotel extends JerseyTest {
 			"<hotel>" + 
 				"<id>" + newHotel.getId() + "</id>" + 
 				"<nome>" + nome + "</nome>" +
+				"<categoria>" + categoria + "</categoria>" +
+				"<habitacion>" +
+					"<prezo>" + prezoHab + "</prezo>" +
+				"</habitacion>" +
 			"</hotel>" + // O que esperamos que devolva o test.
 	    "</hoteis>";
 		//Parametros individuais
@@ -61,12 +101,12 @@ public class BuscarHotel extends JerseyTest {
 		
 		//Test
 		final String testResult = target("busqueda").
-				queryParam("localizacion",loc).queryParam("numPersoas",pPH).
+				queryParam("destino",loc).queryParam("numPersoas",pPH).
 				request().get(String.class);
 		
 		//Limpar Datos
-		habd.delHabitacion(newHabitacion.getId());
-		hd.delHotel(newHotel.getId());
+		has.delHabitacion(newHabitacion.getId());
+		hs.delHotel(newHotel.getId());
 
 		//Resultado
 		assertEquals(testResult,testExpected);

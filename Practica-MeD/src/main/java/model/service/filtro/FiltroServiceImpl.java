@@ -1,38 +1,32 @@
-package main.java.model.service.busqueda;
+package main.java.model.service.filtro;
 
 import static main.java.util.ModelConstants.BUSQUEDA_DATA_SOURCE;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.List;
 
 import javax.sql.DataSource;
 
-import main.java.model.db.busqueda.Busqueda;
-import main.java.model.db.busqueda.SqlBusquedaDao;
-import main.java.model.db.busqueda.SqlBusquedaDaoFactory;
 import main.java.model.db.filtro.Filtro;
+import main.java.model.db.filtro.SqlFiltroDao;
+import main.java.model.db.filtro.SqlFiltroDaoFactory;
 import main.java.util.DataSourceLocator;
 
-public class BusquedaServiceImpl implements BusquedaService {
+public class FiltroServiceImpl implements FiltroService {
 
 	private DataSource dataSource;
-	SqlBusquedaDao busquedaDao = null;
+	SqlFiltroDao filtroDao = null;
 
-	public BusquedaServiceImpl() {
+	public FiltroServiceImpl() {
 		dataSource = DataSourceLocator.getDataSource(BUSQUEDA_DATA_SOURCE);
-		busquedaDao = SqlBusquedaDaoFactory.getDao();
+		filtroDao = SqlFiltroDaoFactory.getDao();
 	}
 
-	@Override
-	public Busqueda realizarBusqueda(String localizacion, Calendar dataInicio,
-			Calendar dataFin, int numPersoas, int opcion, boolean desc,
-			List<Filtro> filtros) {
-
+	public Filtro findFiltro(String nome) {
 		try (Connection connection = dataSource.getConnection()) {
 
 			try {
+				Filtro f;
 
 				/* Prepare connection. */
 				connection
@@ -40,14 +34,12 @@ public class BusquedaServiceImpl implements BusquedaService {
 				connection.setAutoCommit(false);
 
 				/* Do work. */
-				Busqueda busqueda = busquedaDao.realizarBusqueda(connection,
-						localizacion, dataInicio, dataFin, numPersoas, opcion,
-						desc, filtros);
+				f = filtroDao.findFiltro(connection, nome);
 
 				/* Commit. */
 				connection.commit();
 
-				return busqueda;
+				return f;
 
 			} catch (SQLException e) {
 				connection.rollback();
