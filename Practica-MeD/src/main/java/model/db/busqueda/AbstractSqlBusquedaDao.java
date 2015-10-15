@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import main.java.model.db.habitacion.Habitacion;
 import main.java.model.db.hotel.Hotel;
+import main.java.util.Pair;
 
 public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
@@ -16,19 +18,14 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 			String localizacion, Calendar dataInicio, Calendar dataFin,
 			int numPersoas, int opcion, boolean desc) {
 
-		String queryString = "SELECT id, nome, localizacion, descricion, "
-				+ "categoria, temporadaInicio, temporadaFin, servizos, "
-				+ "telefono FROM Hotel WHERE (LOWER(localizacion) LIKE LOWER(?))"
-				+ " OR (LOWER(nome) LIKE LOWER(?))";
+		String queryString = "SELECT a.id, a.nome, a.localizacion, a.descricion, a.categoria, "
+				+ "a.temporadaInicio, a.temporadaFin, a.servizos, a.telefono, b.id, "
+				+ "MIN(b.prezo), b.numCamas FROM Hotel a JOIN Habitacion b ON a.id = b.idHotel "
+				+ "WHERE b.numCamas = ? AND (LOWER(a.localizacion) LIKE LOWER(?)) OR (LOWER(a.nome) LIKE LOWER(?)) GROUP BY a.id";
 
 		// ordear por nome
 		if (opcion == 0) {
 			queryString += " ORDER BY nome";
-		}
-
-		// ordear por servizos
-		if (opcion == 1) {
-			queryString += " ORDER BY servizos";
 		}
 
 		// ordear por Categoria
@@ -46,6 +43,7 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
 			/* Fill "preparedStatement". */
 			int i = 1;
+			preparedStatement.setInt(i++, numPersoas);
 			preparedStatement.setString(i++, "%" + localizacion + "%");
 			preparedStatement.setString(i++, "%" + localizacion + "%");
 
@@ -54,7 +52,7 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
 			/* Get hotels */
 
-			List<Hotel> hoteis = new ArrayList<Hotel>();
+			List<Pair<Hotel,Habitacion>> hoteis = new ArrayList<Pair<Hotel,Habitacion>>();
 
 			while (resultSet.next()) {
 
@@ -72,9 +70,15 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 				String newServizos = resultSet.getString(i++);
 				String newTelefono = resultSet.getString(i++);
 
-				hoteis.add(new Hotel(newId, newNome, newLocalizacion,
+				Long newHabId = resultSet.getLong(i++);
+				Float newHabPrezo = resultSet.getFloat(i++);
+				int newHabNumCamas = resultSet.getInt(i++);
+				
+				
+				hoteis.add(new Pair<Hotel, Habitacion>(new Hotel(newId, newNome, newLocalizacion,
 						newDescricion, newCategoria, newTemporadaInicio,
-						newTemporadaFin, newServizos, newTelefono));
+						newTemporadaFin, newServizos, newTelefono),
+						new Habitacion(newHabId, newHabPrezo, newHabNumCamas, newId)));
 
 			}
 

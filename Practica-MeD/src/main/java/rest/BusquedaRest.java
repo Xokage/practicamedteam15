@@ -13,9 +13,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import main.java.model.db.busqueda.Busqueda;
+import main.java.model.db.habitacion.Habitacion;
 import main.java.model.db.hotel.Hotel;
 import main.java.model.service.busqueda.BusquedaService;
 import main.java.model.service.busqueda.BusquedaServiceImpl;
+import main.java.util.Pair;
 
 @Path("busqueda")
 public class BusquedaRest {
@@ -27,7 +29,7 @@ public class BusquedaRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String buscarXML(@Context UriInfo ui) {
 		MultivaluedMap<String, String> queryParams = ui.getQueryParameters();
-		String localizacion = queryParams.getFirst("localizacion");
+		String localizacion = queryParams.getFirst("destino");
 		Calendar dataInicio = Calendar.getInstance();
 		if (queryParams.getFirst("dataInicio") != null) {
 			try {
@@ -65,15 +67,18 @@ public class BusquedaRest {
 		Busqueda busqueda = busquedaService.realizarBusqueda(localizacion,
 				dataInicio, dataFin, numPersoas, opcion, desc);
 		String result = "<?xml version=\"1.0\"?>" + "<hoteis>";
-		for (Hotel h : busqueda.getHoteis()) {
-			result = result + "<hotel>" + "<id>" + h.getId() + "</id>"
-					+ "<nome>" + h.getNome() + "</nome>" + "</hotel>"; // O que
-																		// esperamos
-																		// que
-																		// devolva
-																		// o
-																		// test.
-
+		for (Pair<Hotel, Habitacion> hh : busqueda.getHoteis()) {
+			result = result + "<hotel>" + "<id>" + hh.getLeft().getId()
+					+ "</id>" + "<nome>" + hh.getLeft().getNome() + "</nome>"
+					+ "<categoria>" + hh.getLeft().getCategoria()
+					+ "</categoria>" + "<habitacion>" + "<prezo>"
+					+ hh.getRight().getPrezo() + "</prezo>" + "</habitacion>"
+					+ "</hotel>"; // O que
+									// esperamos
+									// que
+									// devolva
+									// o
+									// test.
 		}
 		result += "</hoteis>";
 
