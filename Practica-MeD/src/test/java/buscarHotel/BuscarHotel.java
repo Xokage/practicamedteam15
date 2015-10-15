@@ -35,7 +35,7 @@ public class BuscarHotel extends JerseyTest {
 	    String servizos = "wifi,piscina,cocktail";
 	    String telefono = "618382641";
 		
-		final Hotel newHotel = hd.addHotel(nome, localizacion, descricion, categoria, 
+		final Hotel newHotel = hs.addHotel(nome, localizacion, descricion, categoria, 
 				temporadaInicio, temporadaFin, servizos, telefono);
 		
 	    Long idHab;

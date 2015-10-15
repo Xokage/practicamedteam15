@@ -9,7 +9,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import main.java.model.db.filtro.Filtro;
+import main.java.model.db.habitacion.Habitacion;
 import main.java.model.db.hotel.Hotel;
+import main.java.util.Pair;
 
 /**
  *
@@ -25,14 +27,14 @@ public class Busqueda {
 	private Calendar dataFin;
 	private int numPerPorHab;
 	private int categoria;
-	private List<Hotel> hoteis; // engadin este atributo para facer o SELECT
+	private List<Pair<Hotel,Habitacion>> hoteis; // Lista de hoteis coas habitacions dispoñibles que cumplen o criterio de busqueda.
 
 	public Busqueda() {
 
 	}
 
 	public Busqueda(String localizacion, Calendar dataInicio, Calendar dataFin,
-			int numPerPorHab, List<Hotel> hoteis) {
+			int numPerPorHab, List<Pair<Hotel,Habitacion>> hoteis) {
 
 		this.localizacion = localizacion;
 		if (dataInicio != null)
@@ -49,7 +51,7 @@ public class Busqueda {
 	}
 
 	public Busqueda(Long id, String localizacion, Calendar dataInicio,
-			Calendar dataFin, int numPerPorHab, List<Hotel> hoteis) {
+			Calendar dataFin, int numPerPorHab, List<Pair<Hotel,Habitacion>> hoteis) {
 		this(localizacion, dataInicio, dataFin, numPerPorHab, hoteis);
 		this.id = id;
 	}
@@ -110,11 +112,11 @@ public class Busqueda {
 		this.filtros = filtros;
 	}
 
-	public List<Hotel> getHoteis() {
+	public List<Pair<Hotel,Habitacion>> getHoteis() {
 		return hoteis;
 	}
 
-	public void setHoteis(List<Hotel> hoteis) {
+	public void setHoteis(List<Pair<Hotel,Habitacion>> hoteis) {
 		this.hoteis = hoteis;
 	}
 }
