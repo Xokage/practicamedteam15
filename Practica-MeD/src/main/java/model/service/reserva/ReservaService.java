@@ -8,5 +8,7 @@ public interface ReservaService {
 
 		public Reserva reservar(String nomeCliente, String DniCliente, 
     		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion);
-
+		
+		public Reserva findReservaByParameters(String nomeCliente, String DniCliente, 
+    		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion);
 }

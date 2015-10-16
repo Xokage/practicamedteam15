@@ -16,6 +16,9 @@ public interface SqlReservaDao {
 
 	public Reserva addReserva(Connection connection, Calendar dataReserva, String nomeCliente, String DniCliente, 
     		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion);
+	
+	public Reserva findReservaByParameters(Connection connection, String nomeCliente, String DniCliente, 
+    		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion);
 
 	public void delReserva(Connection connection, Long idReserva);
 

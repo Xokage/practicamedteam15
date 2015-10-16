@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
 import main.java.model.db.reserva.Reserva;
 import main.java.model.db.reserva.SqlReservaDao;
 import main.java.model.db.reserva.SqlReservaDaoFactory;
@@ -58,5 +56,31 @@ public class ReservaServiceImpl implements ReservaService {
 			throw new RuntimeException(e);
 		}
 
+	}
+	
+	public Reserva findReservaByParameters(String nomeCliente, String DniCliente, 
+    		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion) {
+		try (Connection connection = dataSource.getConnection()) {
+
+			try {
+
+				/* Prepare connection. */
+				connection
+						.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+				connection.setAutoCommit(false);
+
+				return reservaDao.findReservaByParameters(connection, nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion);
+
+			} catch (SQLException e) {
+				connection.rollback();
+				throw new RuntimeException(e);
+			} catch (RuntimeException | Error e) {
+				connection.rollback();
+				throw e;
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
