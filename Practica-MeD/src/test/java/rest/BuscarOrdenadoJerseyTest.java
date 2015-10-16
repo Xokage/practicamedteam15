@@ -1,4 +1,4 @@
-package test.java.buscarHotel;
+package test.java.rest;
 
 import static main.java.util.ModelConstants.BUSQUEDA_DATA_SOURCE;
 import static org.junit.Assert.*;
@@ -19,14 +19,13 @@ import main.java.util.DataSourceLocator;
 import main.java.util.SimpleDataSource;
 
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class BuscarOrdenado extends JerseyTest {
+public class BuscarOrdenadoJerseyTest extends JerseyTest {
 
 	private HotelService hs = new HotelServiceImpl();
 	private HabitacionService has = new HabitacionServiceImpl();
@@ -75,7 +74,7 @@ public class BuscarOrdenado extends JerseyTest {
 		
 		final Habitacion newHabitacion = has.addHabitacion(prezoHab, numCamasHab, newHotel.getId());
 		
-	    String nome2 = "Hotel Soneira";
+	    String nome2 = "Hotel California";
 	    String localizacion2 = "Vimianzo";
 	    String descricion2 = "";
 	    int categoria2 = 5;
@@ -121,6 +120,7 @@ public class BuscarOrdenado extends JerseyTest {
 		//Test
 		final String testResult = target("busqueda").
 				queryParam("destino",loc).queryParam("numPersoas",pPH).queryParam("opcion",1).
+				queryParam("desc","false").
 				request().get(String.class);
 		
 		//Limpar Datos
