@@ -117,7 +117,7 @@ public class ReservarJerseyTest extends JerseyTest {
 	    
 	    Entity<Reserva> userEntity = Entity.entity(reserva, MediaType.APPLICATION_XML_TYPE);
 	    target("reserva/add").request().post(userEntity); //Here we send POST request
-	    Reserva r = rs.findReservaByParameters(reserva.getNomeCliente(),
+	    Reserva r = rs.findReservaByParameters(reserva.getNomeCliente(),reserva.getDniCliente(),
 	    		reserva.getDataEntrada(),reserva.getDataSaida(),reserva.getIdHotel(),
 	    		reserva.getIdHabitacion());
 
