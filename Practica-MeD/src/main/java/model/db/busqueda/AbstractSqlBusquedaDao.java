@@ -25,11 +25,12 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 				+ "a.temporadaInicio, a.temporadaFin, a.servizos, a.telefono, b.id, "
 				+ "MIN(b.prezo), b.numCamas FROM Hotel a JOIN Habitacion b ON a.id = b.idHotel "
 				+ "WHERE (b.numCamas = ? AND (LOWER(a.localizacion) LIKE LOWER(?)) OR (LOWER(a.nome) LIKE LOWER(?))) ";
-
-		for (Filtro f : filtros) {
-			String tmpstring = f.getExpresion();
-			if (SqlInjectionValidator.validateString(tmpstring))
-				queryString += "AND " + f.getExpresion() + " ";
+		if (filtros != null) {
+			for (Filtro f : filtros) {
+				String tmpstring = f.getExpresion();
+				if (SqlInjectionValidator.validateString(tmpstring))
+					queryString += "AND " + f.getExpresion() + " ";
+			}
 		}
 		queryString += "GROUP BY a.id";
 

@@ -19,18 +19,13 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>com.sun.jersey.jersey-test-framework</groupId>
-			<artifactId>jersey-test-framework-grizzly2</artifactId>
-			<version>1.19</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jayway.restassured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>2.6.0</version>
+			<groupId>
+				org.glassfish.jersey.test-framework.providers
+			</groupId>
+			<artifactId>
+				jersey-test-framework-provider-jetty
+			</artifactId>
+			<version>2.22.1</version>
 		</dependency>
 	</dependencies>
-	<properties>
-		<java.naming.factory.url.pkgs>org.eclipse.jetty.jndi</java.naming.factory.url.pkgs>
-		<java.naming.factory.initial>org.eclipse.jetty.jndi.InitialContextFactory</java.naming.factory.initial>
-	</properties>
 </project>

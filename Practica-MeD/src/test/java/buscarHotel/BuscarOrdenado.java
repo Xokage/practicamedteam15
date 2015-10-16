@@ -1,8 +1,12 @@
 package test.java.buscarHotel;
 
+import static main.java.util.ModelConstants.BUSQUEDA_DATA_SOURCE;
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
+
+import javax.sql.DataSource;
+import javax.ws.rs.core.Application;
 
 import main.java.model.db.habitacion.Habitacion;
 import main.java.model.db.hotel.Hotel;
@@ -10,15 +14,45 @@ import main.java.model.service.habitacion.HabitacionService;
 import main.java.model.service.habitacion.HabitacionServiceImpl;
 import main.java.model.service.hotel.HotelService;
 import main.java.model.service.hotel.HotelServiceImpl;
+import main.java.rest.BusquedaRest;
+import main.java.util.DataSourceLocator;
+import main.java.util.SimpleDataSource;
 
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.test.JerseyTest;
+import org.glassfish.jersey.test.TestProperties;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
 
 public class BuscarOrdenado extends JerseyTest {
 
 	private HotelService hs = new HotelServiceImpl();
 	private HabitacionService has = new HabitacionServiceImpl();
+	
+	@BeforeClass
+	public static void init() {
 
+		/*
+		 * Create a simple data source and add it to "DataSourceLocator" (this
+		 * is needed to test "es.udc.ws.app.model.eventservice.EventService"
+		 */
+		DataSource dataSource = new SimpleDataSource();
+
+		/* Add "dataSource" to "DataSourceLocator". */
+		DataSourceLocator.addDataSource(BUSQUEDA_DATA_SOURCE, dataSource);
+
+	}
+	
+	@Override
+    protected Application configure() {
+        // Find first available port.
+        forceSet(TestProperties.CONTAINER_PORT, "0");
+        
+        return new ResourceConfig(BusquedaRest.class);
+    }
+	
 	@Test
 	public void testBuscarOrdeadoPorPrezo()  {
 		//Inicializacion dos datos
