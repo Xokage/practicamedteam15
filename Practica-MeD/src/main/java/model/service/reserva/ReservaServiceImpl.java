@@ -16,7 +16,7 @@ public class ReservaServiceImpl implements ReservaService {
 	private DataSource dataSource;
 	SqlReservaDao reservaDao = null;
 
-	public ReservaServiceImpl() {
+	public ReservaServiceImpl() { 
 		dataSource = DataSourceLocator.getDataSource(BUSQUEDA_DATA_SOURCE);
 		reservaDao = SqlReservaDaoFactory.getDao();
 	}
