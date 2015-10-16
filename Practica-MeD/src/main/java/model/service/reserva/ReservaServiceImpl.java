@@ -1,16 +1,19 @@
 package main.java.model.service.reserva;
 
 import static main.java.util.ModelConstants.BUSQUEDA_DATA_SOURCE;
+
 import java.util.Calendar;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
 
 import main.java.model.db.reserva.Reserva;
 import main.java.model.db.reserva.SqlReservaDao;
 import main.java.model.db.reserva.SqlReservaDaoFactory;
 import main.java.util.DataSourceLocator;
 
-public class ReservaServiceImpl implements ReservaService{
+public class ReservaServiceImpl implements ReservaService {
 
 	private DataSource dataSource;
 	SqlReservaDao reservaDao = null;
@@ -19,9 +22,10 @@ public class ReservaServiceImpl implements ReservaService{
 		dataSource = DataSourceLocator.getDataSource(BUSQUEDA_DATA_SOURCE);
 		reservaDao = SqlReservaDaoFactory.getDao();
 	}
-	
-	public Reserva reservar(String nomeCliente, String DniCliente, 
-    		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion) {
+
+	public Reserva reservar(String nomeCliente, String DniCliente,
+			Calendar dataEntrada, Calendar dataSaida, Long idHotel,
+			Long idHabitacion) {
 		try (Connection connection = dataSource.getConnection()) {
 
 			try {
@@ -33,8 +37,9 @@ public class ReservaServiceImpl implements ReservaService{
 
 				/* Do work. */
 				Calendar dataReserva = Calendar.getInstance();
-				Reserva reserva = reservaDao.addReserva(connection, dataReserva, nomeCliente,
-						DniCliente, dataEntrada, dataSaida,idHotel,idHabitacion);
+				Reserva reserva = reservaDao.addReserva(connection,
+						dataReserva, nomeCliente, DniCliente, dataEntrada,
+						dataSaida, idHotel, idHabitacion);
 
 				/* Commit. */
 				connection.commit();
@@ -53,4 +58,5 @@ public class ReservaServiceImpl implements ReservaService{
 			throw new RuntimeException(e);
 		}
 
+	}
 }
