@@ -150,4 +150,7 @@ public class Hotel {
 		this.telefono = telefono;
 	}
 
+	public boolean enTemporada(){
+		return this.temporadaInicio.before(Calendar.getInstance())&&this.temporadaFin.after(Calendar.getInstance());
+	}
 }
