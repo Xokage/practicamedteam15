@@ -3,6 +3,7 @@ package test.java.rest;
 import static main.java.util.ModelConstants.BUSQUEDA_DATA_SOURCE;
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.sql.DataSource;
@@ -39,7 +40,8 @@ public class ReservarJerseyTest extends JerseyTest {
 	private HotelService hs = new HotelServiceImpl();
 	private HabitacionService has = new HabitacionServiceImpl();
 	private ReservaService rs = new ReservaServiceImpl();
-	
+	SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+
 	@BeforeClass
 	public static void init() {
 
@@ -117,27 +119,31 @@ public class ReservarJerseyTest extends JerseyTest {
 	    reserva.setIdHabitacion(newHabitacion2.getId());
 	    reserva.setIdHotel(newHotel2.getId());
 	    reserva.setNomeCliente("Pepiño");
-	    
-	    Entity<Reserva> userEntity = Entity.entity(reserva, MediaType.APPLICATION_XML_TYPE);
-	    target("reserva/add").request().post(userEntity); //Here we send POST request
-	    Reserva r = rs.findReservaByParameters(reserva.getNomeCliente(),reserva.getDniCliente(),
-	    		reserva.getDataEntrada(),reserva.getDataSaida(),reserva.getIdHotel(),
-	    		reserva.getIdHabitacion());
-
+		String expectedResult = "<?xml version=\"1.0\"?>" 
+				+ "<reserva>"
+					+ "<id>" + reserva.getId() + "</id>" 
+					+ "<nomeCliente>" + reserva.getNomeCliente() + "</nomeCliente>"
+					+ "<dniCliente>" + reserva.getDniCliente() + "</dniCliente>" 
+					+ "<dataEntrada>" + sdf.format(reserva.getDataEntrada().getTime()) + "</dataEntrada>"
+					+ "<dataSaida>" + sdf.format(reserva.getDataSaida().getTime()) + "</dataSaida>"
+					+ "<idHotel>" + reserva.getIdHotel() + "</idHotel>"
+					+ "<idHabitacion>" + reserva.getIdHabitacion() + "</idHabitacion>"
+				+ "</reserva>"; 
+		
+	    final String testResult = target("reserva/add").queryParam("dataEntrada",sdf.format(dataEntrada.getTime()))
+		.queryParam("dataSaida",sdf.format(dataSaida.getTime())).queryParam("dniCliente","12345678C")
+		.queryParam("idHabitacion",newHabitacion2.getId()).queryParam("idHotel", newHotel2.getId())
+		.queryParam("nomeCliente","Pepiño").request().get(String.class);
+	    Reserva r = new Reserva(reserva);
 	    //Limpar Datos
+		System.out.println(r);
+	    rs.delReserva(r.getId());
 		has.delHabitacion(newHabitacion.getId());
 		has.delHabitacion(newHabitacion2.getId());
 		hs.delHotel(newHotel.getId());
 		hs.delHotel(newHotel2.getId());
-	    rs.delReserva(r.getId());
 
-	    assertTrue(reserva.getDataEntrada()==r.getDataEntrada()&&
-	    		reserva.getDataReserva()==r.getDataReserva()&&
-	    		reserva.getDataSaida()==r.getDataSaida()&&
-	    		reserva.getDniCliente()==r.getDniCliente()&&
-	    		reserva.getIdHabitacion()==r.getIdHabitacion()&&
-	    		reserva.getIdHotel()==r.getIdHotel()&&
-	    		reserva.getNomeCliente()==r.getNomeCliente());
+	    assertEquals(expectedResult,testResult);
 	}
 
 }

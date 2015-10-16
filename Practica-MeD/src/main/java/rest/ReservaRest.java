@@ -64,24 +64,61 @@ import main.java.model.service.busqueda.BusquedaServiceImpl;
 import main.java.model.service.filtro.FiltroService;
 import main.java.model.service.filtro.FiltroServiceImpl;
 import main.java.util.Pair;
+
 @Path("reserva")
 public class ReservaRest {
 
 	ReservaService reservaService = new ReservaServiceImpl();
-	
+	SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	@Path("reserva/add")
-	public void reservaXML(@QueryParam("nomeCliente") String nomeCliente, 
-			@QueryParam("dniCliente") String DniCliente, 
-			@QueryParam("dataEntrada") Calendar dataEntrada, 
-			@QueryParam("dataSaida") Calendar dataSaida, 
-			@QueryParam("idHotel") Long idHotel, 
-			@QueryParam("idHabitacion") Long idHabitacion) {
-		
-		Reserva reserva = reservaService.reservar(nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion);
-		
+	@Path("add")
+	public String reservaXML(@Context UriInfo ui) {
 
+		MultivaluedMap<String, String> queryParams = ui.getQueryParameters();
+		String nomeCliente = queryParams.getFirst("nomeCliente");
+		String dniCliente = queryParams.getFirst("dniCliente");
+		Calendar dataEntrada = Calendar.getInstance();
+		Calendar dataSaida = Calendar.getInstance();
+		Long idHotel = Long.parseLong(queryParams.getFirst("idHotel"));
+		Long idHabitacion = Long
+				.parseLong(queryParams.getFirst("idHabitacion"));
+
+		if (queryParams.getFirst("dataEntrada") != null) {
+			try {
+				dataEntrada.setTime(sdf.parse(queryParams
+						.getFirst("dataEntrada")));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		} else
+			dataEntrada = null;
+
+		if (queryParams.getFirst("dataSaida") != null) {
+			try {
+				dataSaida.setTime(sdf.parse(queryParams.getFirst("dataSaida")));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		} else
+			dataSaida = null;
+
+		Reserva reserva = reservaService.reservar(nomeCliente, dniCliente,
+				dataEntrada, dataSaida, idHotel, idHabitacion);
+
+		String result = "<?xml version=\"1.0\"?>" 
+				+ "<reserva>"
+					+ "<id>" + reserva.getId() + "</id>" 
+					+ "<nomeCliente>" + reserva.getNomeCliente() + "</nomeCliente>"
+					+ "<dniCliente>" + reserva.getDniCliente() + "</dniCliente>" 
+					+ "<dataEntrada>" + sdf.format(reserva.getDataEntrada().getTime()) + "</dataEntrada>"
+					+ "<dataSaida>" + sdf.format(reserva.getDataSaida().getTime()) + "</dataSaida>"
+					+ "<idHotel>" + reserva.getIdHotel() + "</idHotel>"
+					+ "<idHabitacion>" + reserva.getIdHabitacion() + "</idHabitacion>"
+				+ "</reserva>"; 
+
+		return result;
+		
 	}
-	
 }

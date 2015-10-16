@@ -38,7 +38,11 @@ public class Hotel {
 		this.localizacion = localizacion;
 		this.descricion = descricion;
 		this.categoria = categoria;
+		if(temporadaInicio != null)
+        	temporadaInicio.set(Calendar.MILLISECOND,0);
 		this.temporadaInicio = temporadaInicio;
+		if(temporadaFin != null)
+        	temporadaFin.set(Calendar.MILLISECOND,0);
 		this.temporadaFin = temporadaFin;
 		this.servizos = servizos;
 		this.telefono = telefono;
