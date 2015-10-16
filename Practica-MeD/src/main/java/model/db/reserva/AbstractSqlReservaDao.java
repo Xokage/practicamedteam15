@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.sql.Statement;
 import java.sql.Timestamp;
-
 import java.util.ArrayList;
 import java.util.List;
+
 import main.java.model.db.reserva.Reserva;
 
 public abstract class AbstractSqlReservaDao implements SqlReservaDao {
@@ -153,7 +153,7 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 
 			/* Get results. */
 
-			List<Reservas> reservas = new ArrayList<Reservas>();
+			List<Reserva> reservas = new ArrayList<Reserva>();
 
 			while (resultSet.next()) {
 
@@ -182,9 +182,8 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 		}
 	}
 
-	public Reserva findReservaByDates(Connection connection, Long idHabitacion,
-			Calendar dataEntrada, Calendar dataSaida) {
-
+	public Reserva findReservaByDates(Connection connection, 
+			Calendar dataEntrada, Calendar dataSaida,Long idHabitacion) {
 		/* Create "queryString". */
 		String queryString = "SELECT id, dataReserva, nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion, FROM Reserva WHERE idHabitacion = ?";
 
