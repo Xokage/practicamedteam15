@@ -63,10 +63,11 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 			Calendar dataSaida, Long idHotel, Long idHabitacion) {
 
 		/* Create "queryString". */
-		String queryString = "SELECT id, dataReserva, nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion, FROM Reserva "
+		String queryString = "SELECT id, dataReserva, nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion FROM Reserva "
 				+ "WHERE nomeCliente = ? AND DniCliente = ? AND idHotel = ? AND idHabitacion = ?";
 
 		if (dataEntrada != null) {
+			dataEntrada.set
 			queryString += " AND dataEntrada = ?";
 
 		}
@@ -185,7 +186,7 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 	public Reserva findReservaByDates(Connection connection, 
 			Calendar dataEntrada, Calendar dataSaida,Long idHabitacion) {
 		/* Create "queryString". */
-		String queryString = "SELECT id, dataReserva, nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion, FROM Reserva WHERE idHabitacion = ?";
+		String queryString = "SELECT id, dataReserva, nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion FROM Reserva WHERE idHabitacion = ?";
 
 		if (dataEntrada != null) {
 			queryString += " AND dataEntrada = ?";

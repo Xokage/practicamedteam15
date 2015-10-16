@@ -25,7 +25,7 @@ public class Reserva {
     @XmlElement private Long id;
     @XmlElement private Calendar dataReserva;
     @XmlElement private String nomeCliente;
-    @XmlElement private String DniCliente;
+    @XmlElement private String dniCliente;
     @XmlElement private Calendar dataEntrada;
     @XmlElement private Calendar dataSaida;
 
@@ -36,12 +36,22 @@ public class Reserva {
     	
     }
     
-    public Reserva(Calendar dataReserva, String nomeCliente, String DniCliente, 
+    public Reserva(Reserva r){
+    	this.dataEntrada = r.getDataEntrada();
+    	this.dataReserva = r.getDataReserva();
+    	this.dataSaida = r.getDataSaida();
+    	this.dniCliente = r.getDniCliente();
+    	this.idHabitacion = r.getIdHabitacion();
+    	this.idHotel
+    }
+    public Reserva(Calendar dataReserva, String nomeCliente, String dniCliente, 
     		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion){
     	
+    	if(dataReserva != null)
+        	dataReserva.set(Calendar.MILLISECOND,0);
     	this.dataReserva = dataReserva;
     	this.nomeCliente = nomeCliente;
-    	this.DniCliente = DniCliente;
+    	this.dniCliente = dniCliente;
     	if (dataEntrada != null)
 			dataEntrada.set(Calendar.MILLISECOND, 0); // Workaround for rounding
 														// errors
@@ -103,11 +113,11 @@ public class Reserva {
     }
 
     public String getDniCliente() {
-        return DniCliente;
+        return dniCliente;
     }
 
-    public void setDniCliente(String DniCliente) {
-        this.DniCliente = DniCliente;
+    public void setDniCliente(String dniCliente) {
+        this.dniCliente = dniCliente;
     }
 
     public Calendar getDataEntrada() {
