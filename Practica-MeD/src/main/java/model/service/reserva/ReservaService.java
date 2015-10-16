@@ -1,7 +1,8 @@
 package main.java.model.service.reserva;
 
 import java.util.Calendar;
-import main.java.transaccions.Reserva;
+
+import main.java.model.db.reserva.Reserva;
 
 public interface ReservaService {
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.transaccions;
+package main.java.model.db.reserva;
 
 import main.java.model.db.habitacion.Habitacion;
 
@@ -82,11 +82,11 @@ public class Reserva {
         this.id = id;
     }
 
-    public Date getDataReserva() {
+    public Calendar getDataReserva() {
         return dataReserva;
     }
 
-    public void setDataReserva(Date dataReserva) {
+    public void setDataReserva(Calendar dataReserva) {
         this.dataReserva = dataReserva;
     }
 
@@ -106,19 +106,19 @@ public class Reserva {
         this.DniCliente = DniCliente;
     }
 
-    public Date getDataEntrada() {
+    public Calendar getDataEntrada() {
         return dataEntrada;
     }
 
-    public void setDataEntrada(Date dataEntrada) {
+    public void setDataEntrada(Calendar dataEntrada) {
         this.dataEntrada = dataEntrada;
     }
 
-    public Date getDataSaida() {
+    public Calendar getDataSaida() {
         return dataSaida;
     }
 
-    public void setDataSaida(Date dataSaida) {
+    public void setDataSaida(Calendar dataSaida) {
         this.dataSaida = dataSaida;
     }
 

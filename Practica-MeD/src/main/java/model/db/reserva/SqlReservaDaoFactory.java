@@ -1,4 +1,4 @@
-package main.java.transaccions;
+package main.java.model.db.reserva;
 
 
 import main.java.util.ConfigurationParametersManager;

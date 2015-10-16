@@ -49,9 +49,9 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 		}
 
 		if (desc) {
-			queryString += " DESC";
-		} else
 			queryString += " ASC";
+		} else
+			queryString += " DESC";
 
 		try (PreparedStatement preparedStatement = connection
 				.prepareStatement(queryString)) {
