@@ -11,22 +11,26 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author Urist
  */
 
+@XmlRootElement
 public class Reserva {
 
-    private Long id;
-    private Calendar dataReserva;
-    private String nomeCliente;
-    private String DniCliente;
-    private Calendar dataEntrada;
-    private Calendar dataSaida;
+    @XmlElement private Long id;
+    @XmlElement private Calendar dataReserva;
+    @XmlElement private String nomeCliente;
+    @XmlElement private String DniCliente;
+    @XmlElement private Calendar dataEntrada;
+    @XmlElement private Calendar dataSaida;
 
-    private Long idHotel;
-    private Long idHabitacion;
+    @XmlElement private Long idHotel;
+    @XmlElement private Long idHabitacion;
     
     public Reserva() {
     	

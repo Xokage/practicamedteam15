@@ -22,9 +22,11 @@ import main.java.model.service.hotel.HotelServiceImpl;
 import main.java.model.service.reserva.ReservaService;
 import main.java.model.service.reserva.ReservaServiceImpl;
 import main.java.rest.BusquedaRest;
+import main.java.rest.ReservaRest;
 import main.java.util.DataSourceLocator;
 import main.java.util.SimpleDataSource;
 
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -55,9 +57,10 @@ public class ReservarJerseyTest extends JerseyTest {
 	@Override
     protected Application configure() {
         // Find first available port.
+		ResourceConfig rs = new ResourceConfig(ReservaRest.class);
         forceSet(TestProperties.CONTAINER_PORT, "0");
-        
-        return new ResourceConfig(BusquedaRest.class);
+        rs.register(MultiPartFeature.class);
+        return rs;
     }
 	
 	@Test
