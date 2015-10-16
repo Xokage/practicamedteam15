@@ -2,7 +2,6 @@ package main.java.model.db.reserva;
 
 import java.sql.Connection;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public interface SqlReservaDao {

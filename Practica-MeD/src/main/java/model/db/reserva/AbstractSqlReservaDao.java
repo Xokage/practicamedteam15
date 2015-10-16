@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +66,6 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 				+ "WHERE nomeCliente = ? AND DniCliente = ? AND idHotel = ? AND idHabitacion = ?";
 
 		if (dataEntrada != null) {
-			dataEntrada.set
 			queryString += " AND dataEntrada = ?";
 
 		}

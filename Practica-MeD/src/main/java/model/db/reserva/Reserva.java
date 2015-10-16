@@ -5,11 +5,8 @@
  */
 package main.java.model.db.reserva;
 
-import main.java.model.db.habitacion.Habitacion;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,7 +39,8 @@ public class Reserva {
     	this.dataSaida = r.getDataSaida();
     	this.dniCliente = r.getDniCliente();
     	this.idHabitacion = r.getIdHabitacion();
-    	this.idHotel
+    	this.idHotel = r.getIdHotel();
+    	this.nomeCliente = r.getNomeCliente();
     }
     public Reserva(Calendar dataReserva, String nomeCliente, String dniCliente, 
     		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion){

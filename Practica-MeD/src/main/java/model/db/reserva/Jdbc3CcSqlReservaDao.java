@@ -7,10 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
-
-import main.java.model.db.hotel.AbstractSqlHotelDao;
-import main.java.model.db.hotel.Hotel;
 
 public class Jdbc3CcSqlReservaDao extends AbstractSqlReservaDao{
 
