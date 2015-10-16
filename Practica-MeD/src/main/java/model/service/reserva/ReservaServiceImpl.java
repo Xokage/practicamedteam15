@@ -1,16 +1,13 @@
 package main.java.model.service.reserva;
 
 import static main.java.util.ModelConstants.BUSQUEDA_DATA_SOURCE;
-import main.java.model.db.hotel.Hotel;
+import java.util.Calendar;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import main.java.model.db.reserva.Reserva;
 import main.java.model.db.reserva.SqlReservaDao;
 import main.java.model.db.reserva.SqlReservaDaoFactory;
-import main.java.model.service.hotel.Calendar;
-import main.java.model.service.hotel.Connection;
-import main.java.model.service.hotel.Error;
-import main.java.model.service.hotel.RuntimeException;
-import main.java.model.service.hotel.SQLException;
-import main.java.model.service.hotel.String;
 import main.java.util.DataSourceLocator;
 
 public class ReservaServiceImpl implements ReservaService{
@@ -23,7 +20,7 @@ public class ReservaServiceImpl implements ReservaService{
 		reservaDao = SqlReservaDaoFactory.getDao();
 	}
 	
-	public Reserva reservar(Calendar dataReserva, String nomeCliente, String DniCliente, 
+	public Reserva reservar(String nomeCliente, String DniCliente, 
     		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion) {
 		try (Connection connection = dataSource.getConnection()) {
 
@@ -35,6 +32,7 @@ public class ReservaServiceImpl implements ReservaService{
 				connection.setAutoCommit(false);
 
 				/* Do work. */
+				Calendar dataReserva = Calendar.getInstance();
 				Reserva reserva = reservaDao.addReserva(connection, dataReserva, nomeCliente,
 						DniCliente, dataEntrada, dataSaida,idHotel,idHabitacion);
 
