@@ -11,9 +11,6 @@ import javax.sql.DataSource;
 import main.java.model.db.reserva.Reserva;
 import main.java.model.db.reserva.SqlReservaDao;
 import main.java.model.db.reserva.SqlReservaDaoFactory;
-import main.java.model.service.hotel.Error;
-import main.java.model.service.hotel.Long;
-import main.java.model.service.hotel.RuntimeException;
 import main.java.util.DataSourceLocator;
 
 public class ReservaServiceImpl implements ReservaService {

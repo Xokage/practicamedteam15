@@ -27,5 +27,10 @@
 			</artifactId>
 			<version>2.22.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-multipart</artifactId>
+			<version>2.22.1</version> <!-- Make sure the Jersey matches the one you are currently using -->
+		</dependency>
 	</dependencies>
 </project>
