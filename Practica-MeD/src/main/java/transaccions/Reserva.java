@@ -7,6 +7,7 @@ package main.java.transaccions;
 
 import main.java.model.db.habitacion.Habitacion;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,30 +19,54 @@ import java.util.List;
 public class Reserva {
 
     private Long id;
-    private Date dataReserva;
+    private Calendar dataReserva;
     private String nomeCliente;
     private String DniCliente;
-    private Date dataEntrada;
-    private Date dataSaida;
+    private Calendar dataEntrada;
+    private Calendar dataSaida;
 
     private Long idHotel;
-    private List<Habitacion> reservadas;
+    private Long idHabitacion;
     
     public Reserva() {
     	
     }
     
-    public Reserva(Date dataReserva, String nomeCliente, String DniCliente, 
-    		Date dataEntrada, Date dataSaida){
+    public Reserva(Calendar dataReserva, String nomeCliente, String DniCliente, 
+    		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion){
     	
     	this.dataReserva = dataReserva;
     	this.nomeCliente = nomeCliente;
     	this.DniCliente = DniCliente;
-    	this.dataEntrada = dataEntrada;
-    	this.dataSaida = dataSaida;
-    	
+    	if (dataEntrada != null)
+			dataEntrada.set(Calendar.MILLISECOND, 0); // Workaround for rounding
+														// errors
+		this.dataEntrada = dataEntrada;
+
+		if (dataSaida != null)
+			dataSaida.set(Calendar.MILLISECOND, 0);
+
+		this.dataSaida = dataSaida;
+    	this.idHotel = idHotel;
+    	this.idHabitacion = idHabitacion;
     }
-    public Long getIdHotel() {
+    
+    public Reserva(Long id, Calendar dataReserva, String nomeCliente, String DniCliente, 
+    		Calendar dataEntrada, Calendar dataSaida, Long idHotel, Long idHabitacion){
+    	
+    	this(dataReserva,nomeCliente,DniCliente, dataEntrada,dataSaida,idHotel,idHabitacion);
+    	this.id = id;
+    }
+    
+    public Long getIdHabitacion() {
+		return idHabitacion;
+	}
+
+	public void setIdHabitacion(Long idHabitacion) {
+		this.idHabitacion = idHabitacion;
+	}
+
+	public Long getIdHotel() {
         return idHotel;
     }
 
