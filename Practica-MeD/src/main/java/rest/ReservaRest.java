@@ -69,20 +69,18 @@ public class ReservaRest {
 
 	ReservaService reservaService = new ReservaServiceImpl();
 	
-	@POST
-	@Consumes(MediaType.APPLICATION_XML)
-	@Produces(MediaType.APPLICATION_XML)
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
 	@Path("reserva/add")
-	public Response reservaXML(@FormParam("nomeCliente") String nomeCliente, 
-			@FormParam("dniCliente") String DniCliente, 
-			@FormParam("dataEntrada") Calendar dataEntrada, 
-			@FormParam("dataSaida") Calendar dataSaida, 
-			@FormParam("idHotel") Long idHotel, 
-			@FormParam("idHabitacion") Long idHabitacion) {
+	public void reservaXML(@QueryParam("nomeCliente") String nomeCliente, 
+			@QueryParam("dniCliente") String DniCliente, 
+			@QueryParam("dataEntrada") Calendar dataEntrada, 
+			@QueryParam("dataSaida") Calendar dataSaida, 
+			@QueryParam("idHotel") Long idHotel, 
+			@QueryParam("idHabitacion") Long idHabitacion) {
 		
 		Reserva reserva = reservaService.reservar(nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion);
-		String output = reserva.toString();
-		return Response.status(200).entity(output).build();
+		
 
 	}
 	
