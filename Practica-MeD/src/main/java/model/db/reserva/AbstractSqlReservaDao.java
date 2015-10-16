@@ -57,8 +57,80 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public List<Reserva> findReservaByClient(Connection connection, String nomeCliente) {
+
+	public Reserva findReservaByParameters(Connection connection,
+			String nomeCliente, String DniCliente, Calendar dataEntrada,
+			Calendar dataSaida, Long idHotel, Long idHabitacion) {
+
+		/* Create "queryString". */
+		String queryString = "SELECT id, dataReserva, nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion, FROM Reserva "
+				+ "WHERE nomeCliente = ? AND DniCliente = ? AND idHotel = ? AND idHabitacion = ?";
+
+		if (dataEntrada != null) {
+			queryString += " AND dataEntrada = ?";
+
+		}
+
+		if (dataSaida != null) {
+			queryString += " AND dataSaida = ?";
+		}
+
+		try (PreparedStatement preparedStatement = connection
+				.prepareStatement(queryString)) {
+
+			/* Fill "preparedStatement". */
+			int i = 1;
+			preparedStatement.setString(i++, nomeCliente);
+			preparedStatement.setString(i++, DniCliente);
+			preparedStatement.setLong(i++, idHotel);
+			preparedStatement.setLong(i++, idHabitacion);
+
+			if (dataEntrada != null) {
+				preparedStatement.setTimestamp(i++,
+						dataEntrada != null ? new Timestamp(dataEntrada
+								.getTime().getTime()) : null);
+
+			}
+
+			if (dataSaida != null) {
+				preparedStatement.setTimestamp(i++,
+						dataSaida != null ? new Timestamp(dataSaida.getTime()
+								.getTime()) : null);
+			}
+			/* Execute query. */
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (!resultSet.next()) {
+				// If you find nothing return null
+				return null;
+			}
+
+			/* Get results. */
+
+			i = 1;
+			Long newId = resultSet.getLong(i++);
+			Calendar newDataReserva = Calendar.getInstance();
+			newDataReserva.setTime(resultSet.getTimestamp(i++));
+			String newNomeCliente = resultSet.getString(i++);
+			String newDniCliente = resultSet.getString(i++);
+			Calendar newDataEntrada = Calendar.getInstance();
+			newDataEntrada.setTime(resultSet.getTimestamp(i++));
+			Calendar newDataSaida = Calendar.getInstance();
+			newDataSaida.setTime(resultSet.getTimestamp(i++));
+			Long newIdHotel = resultSet.getLong(i++);
+			Long newIdHabitacion = resultSet.getLong(i++);
+
+			return new Reserva(newId, newDataReserva, newNomeCliente,
+					newDniCliente, newDataEntrada, newDataSaida, newIdHotel,
+					newIdHabitacion);
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public List<Reserva> findReservaByClient(Connection connection,
+			String nomeCliente) {
 
 		/* Create "queryString". */
 		String queryString = "SELECT id, dataReserva, nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion, FROM Reserva "
@@ -80,13 +152,11 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 			}
 
 			/* Get results. */
-			
+
 			List<Reservas> reservas = new ArrayList<Reservas>();
-			
-			
-			
+
 			while (resultSet.next()) {
-				
+
 				i = 1;
 				Long newId = resultSet.getLong(i++);
 				Calendar newDataReserva = Calendar.getInstance();
@@ -100,33 +170,29 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 				Long newIdHotel = resultSet.getLong(i++);
 				Long newIdHabitacion = resultSet.getLong(i++);
 
-				return reservas.add(new Reserva(newId, newDataReserva, newNomeCliente,
-						newDniCliente, newDataEntrada, newDataSaida, newIdHotel,
-						newIdHabitacion));
+				reservas.add(new Reserva(newId, newDataReserva, newNomeCliente,
+						newDniCliente, newDataEntrada, newDataSaida,
+						newIdHotel, newIdHabitacion));
 			}
-			
-			
+
 			return reservas;
-			
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public Reserva findReservaByDates(Connection connection, Long idHabitacion, Calendar dataEntrada, Calendar dataSaida) {
+
+	public Reserva findReservaByDates(Connection connection, Long idHabitacion,
+			Calendar dataEntrada, Calendar dataSaida) {
 
 		/* Create "queryString". */
 		String queryString = "SELECT id, dataReserva, nomeCliente, DniCliente, dataEntrada, dataSaida, idHotel, idHabitacion, FROM Reserva WHERE idHabitacion = ?";
-		
-		if ((dataEntrada != null) && (dataSaida != null)) {
-			
-		}
-		
+
 		if (dataEntrada != null) {
 			queryString += " AND dataEntrada = ?";
-			
-		} 
-		
+
+		}
+
 		if (dataSaida != null) {
 			queryString += " AND dataSaida = ?";
 		}
@@ -136,20 +202,20 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 
 			/* Fill "preparedStatement". */
 			int i = 1;
-			
+
 			preparedStatement.setLong(i++, idHabitacion);
-			
+
 			if (dataEntrada != null) {
 				preparedStatement.setTimestamp(i++,
 						dataEntrada != null ? new Timestamp(dataEntrada
 								.getTime().getTime()) : null);
-				
-			} 
-			
+
+			}
+
 			if (dataSaida != null) {
 				preparedStatement.setTimestamp(i++,
-						dataSaida != null ? new Timestamp(dataSaida
-								.getTime().getTime()) : null);
+						dataSaida != null ? new Timestamp(dataSaida.getTime()
+								.getTime()) : null);
 			}
 
 			/* Execute query. */
@@ -182,7 +248,7 @@ public abstract class AbstractSqlReservaDao implements SqlReservaDao {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public void delReserva(Connection connection, Long id) {
 
 		/* Create "queryString". */
