@@ -11,6 +11,9 @@ import javax.sql.DataSource;
 import main.java.model.db.reserva.Reserva;
 import main.java.model.db.reserva.SqlReservaDao;
 import main.java.model.db.reserva.SqlReservaDaoFactory;
+import main.java.model.service.hotel.Error;
+import main.java.model.service.hotel.Long;
+import main.java.model.service.hotel.RuntimeException;
 import main.java.util.DataSourceLocator;
 
 public class ReservaServiceImpl implements ReservaService {
@@ -22,7 +25,36 @@ public class ReservaServiceImpl implements ReservaService {
 		dataSource = DataSourceLocator.getDataSource(BUSQUEDA_DATA_SOURCE);
 		reservaDao = SqlReservaDaoFactory.getDao();
 	}
+	
+	public void delReserva(Long id) {
+		try (Connection connection = dataSource.getConnection()) {
 
+			try {
+
+				/* Prepare connection. */
+				connection
+						.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+				connection.setAutoCommit(false);
+
+				/* Do work. */
+				reservaDao.delReserva(connection, id);
+
+				/* Commit. */
+				connection.commit();
+
+			} catch (SQLException e) {
+				connection.rollback();
+				throw new RuntimeException(e);
+			} catch (RuntimeException | Error e) {
+				connection.rollback();
+				throw e;
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
 	public Reserva reservar(String nomeCliente, String DniCliente,
 			Calendar dataEntrada, Calendar dataSaida, Long idHotel,
 			Long idHabitacion) {
