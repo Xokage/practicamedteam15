@@ -33,4 +33,5 @@
 			<version>2.22.1</version> <!-- Make sure the Jersey matches the one you are currently using -->
 		</dependency>
 	</dependencies>
+	<packaging>war</packaging>
 </project>
