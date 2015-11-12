@@ -16,5 +16,9 @@ public interface SqlBusquedaDao {
 	public Busqueda realizarBusqueda(Connection connection,
 			String localizacion, Calendar dataInicio, Calendar dataFin,
 			int numPersoas, int opcion, boolean desc, List<Filtro> filtros);
+	
+	public Busqueda realizarBusqueda(Connection connection,
+			String localizacion, Float precioMax, Float precioMin, Calendar dataInicio, Calendar dataFin,
+			int numPersoas, int opcion, boolean desc, List<Filtro> filtros);
 
 }
