@@ -82,14 +82,16 @@ public class BusquedaRest {
 				dataInicio, dataFin, numPersoas, opcion, desc, filtros);
 		String result = "<?xml version=\"1.0\"?>" + "<hoteis>";
 		for (Pair<Hotel, Habitacion> hh : busqueda.getHoteis()) {
+			
 			result = result 
 					+ "<hotel>" 
 						+ "<id>" + hh.getLeft().getId() + "</id>" 
 						+ "<nome>" + hh.getLeft().getNome() + "</nome>"
-						+ "<categoria>" + hh.getLeft().getCategoria() + "</categoria>" 
-						+ "<habitacion>" 
-							+ "<prezo>" + hh.getRight().getPrezo() + "</prezo>" 
-						+ "</habitacion>"
+						+ "<categoria>" + hh.getLeft().getCategoria() + "</categoria>"
+						+ "<descricion>" + hh.getLeft().getDescricion() + "</descricion>"
+						+ "<telefono>" + hh.getLeft().getTelefono() + "</telefono>"
+						+ "<temporada>" + hh.getLeft().enTemporada() + "</temporada>"
+						+ "<localizacion>" + hh.getLeft().getLocalizacion() + "</localizacion>"
 					+ "</hotel>"; // O que
 									// esperamos
 									// que
