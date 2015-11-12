@@ -24,7 +24,7 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 		String queryString = "SELECT a.id, a.nome, a.localizacion, a.descricion, a.categoria, "
 				+ "a.temporadaInicio, a.temporadaFin, a.servizos, a.telefono, b.id, "
 				+ "MIN(b.prezo), b.numCamas FROM Hotel a JOIN Habitacion b ON a.id = b.idHotel "
-				+ "WHERE (b.numCamas = ? AND (LOWER(a.localizacion) LIKE LOWER(?)) OR (LOWER(a.nome) LIKE LOWER(?))) ";
+				+ "WHERE (b.numCamas = ? AND ((LOWER(a.localizacion) LIKE LOWER(?)) OR (LOWER(a.nome) LIKE LOWER(?)))) ";
 		if (filtros != null) {
 			for (Filtro f : filtros) {
 				String tmpstring = f.getExpresion();
@@ -114,7 +114,7 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 		String queryString = "SELECT a.id, a.nome, a.localizacion, a.descricion, a.categoria, "
 				+ "a.temporadaInicio, a.temporadaFin, a.servizos, a.telefono, b.id, "
 				+ "MIN(b.prezo), b.numCamas FROM Hotel a JOIN Habitacion b ON a.id = b.idHotel "
-				+ "WHERE (b.numCamas = ? AND (LOWER(a.localizacion) LIKE LOWER(?)) OR (LOWER(a.nome) LIKE LOWER(?)) AND (prezo  BETWEEN ? AND ?)) ";
+				+ "WHERE (b.numCamas = ? AND ((LOWER(a.localizacion) LIKE LOWER(?)) OR (LOWER(a.nome) LIKE LOWER(?))) AND (prezo  BETWEEN ? AND ?)) ";
 		if (filtros != null) {
 			for (Filtro f : filtros) {
 				String tmpstring = f.getExpresion();
