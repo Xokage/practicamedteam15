@@ -190,7 +190,7 @@ public abstract class AbstractSqlBusquedaDao implements SqlBusquedaDao {
 
 			}
 
-			return new Busqueda(localizacion, dataInicio, dataFin, numPersoas,
+			return new Busqueda(localizacion, prezoMax, prezoMin, dataInicio, dataFin, numPersoas,
 					hoteis);
 
 		} catch (SQLException e) {

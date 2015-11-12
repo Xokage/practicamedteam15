@@ -62,5 +62,42 @@ public class BusquedaServiceImpl implements BusquedaService {
 		}
 
 	}
+	
+	@Override
+	public Busqueda realizarBusqueda(String localizacion, Float prezoMax, Float prezoMin, Calendar dataInicio,
+			Calendar dataFin, int numPersoas, int opcion, boolean desc,
+			List<Filtro> filtros) {
 
+		try (Connection connection = dataSource.getConnection()) {
+
+			try {
+
+				/* Prepare connection. */
+				connection
+						.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+				connection.setAutoCommit(false);
+
+				/* Do work. */
+				Busqueda busqueda = busquedaDao.realizarBusqueda(connection,
+						localizacion, prezoMax, prezoMin, dataInicio, dataFin, numPersoas, opcion,
+						desc, filtros);
+
+				/* Commit. */
+				connection.commit();
+
+				return busqueda;
+
+			} catch (SQLException e) {
+				connection.rollback();
+				throw new RuntimeException(e);
+			} catch (RuntimeException | Error e) {
+				connection.rollback();
+				throw e;
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
 }

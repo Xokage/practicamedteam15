@@ -15,5 +15,8 @@ public interface BusquedaService {
 	// Opcion 0 = Ordear por nome
 	// Opcion 1 = Ordear por prezo
 	// Opcion 3 = Ordear por categoria
-
+	
+	public Busqueda realizarBusqueda(String localizacion, Float prezoMax, Float prezoMin, Calendar dataInicio,
+			Calendar dataFin, int numPersoas, int opcion, boolean desc,
+			List<Filtro> filtros);
 }

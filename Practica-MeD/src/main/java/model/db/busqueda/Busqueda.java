@@ -27,6 +27,8 @@ public class Busqueda {
 	private Calendar dataFin;
 	private int numPerPorHab;
 	private int categoria;
+	private Float prezoMax;
+	private Float prezoMin;
 	private List<Pair<Hotel,Habitacion>> hoteis; // Lista de hoteis coas habitacions dispoñibles que cumplen o criterio de busqueda.
 
 	public Busqueda() {
@@ -49,13 +51,37 @@ public class Busqueda {
 		this.numPerPorHab = numPerPorHab;
 		this.hoteis = hoteis;
 	}
-
+	
 	public Busqueda(Long id, String localizacion, Calendar dataInicio,
 			Calendar dataFin, int numPerPorHab, List<Pair<Hotel,Habitacion>> hoteis) {
 		this(localizacion, dataInicio, dataFin, numPerPorHab, hoteis);
 		this.id = id;
 	}
+	
+	public Busqueda(String localizacion, Float prezoMax, Float prezoMin, Calendar dataInicio,
+			Calendar dataFin, int numPerPorHab, List<Pair<Hotel,Habitacion>> hoteis) {
+		this.localizacion = localizacion;
+		if (dataInicio != null)
+			dataInicio.set(Calendar.MILLISECOND, 0); // Workaround for rounding
+														// errors
+		this.dataInicio = dataInicio;
 
+		if (dataFin != null)
+			dataFin.set(Calendar.MILLISECOND, 0); // Workaround for rounding
+													// errors
+		this.dataFin = dataFin;
+		this.numPerPorHab = numPerPorHab;
+		this.hoteis = hoteis;
+		this.prezoMax = prezoMax;
+		this.prezoMin = prezoMin;
+	}
+	
+	public Busqueda(Long id, String localizacion, Float prezoMax, Float prezoMin, Calendar dataInicio,
+			Calendar dataFin, int numPerPorHab, List<Pair<Hotel,Habitacion>> hoteis) {
+		this(localizacion,prezoMax,prezoMin,dataInicio,dataFin,numPerPorHab,hoteis);
+		this.id = id;
+	}
+	
 	public Long getId() {
 		return id;
 	}
