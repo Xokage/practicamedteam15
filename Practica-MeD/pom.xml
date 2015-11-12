@@ -34,4 +34,7 @@
 		</dependency>
 	</dependencies>
 	<packaging>war</packaging>
+	<properties>
+		<webxml>WebContent/WEB-INF/web.xml</webxml>
+	</properties>
 </project>
